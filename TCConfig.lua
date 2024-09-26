@@ -10,7 +10,8 @@ cmd "set number"
 vim.opt.fileencodings = "utf-8,big5,gbk,gb18030,gb2312,ucs-bom,cp936,euc-jp,euc-kr,shift-jis,latin1"
 vim.opt.encoding = "utf-8"
 vim.opt.langmenu = "zh_TW.UTF-8"
-vim.o.mapleader = "\\"
+vim.g.mapleader = "\\"
+vim.g.maplocalleader = "\\"
 vim.opt.ignorecase = true -- Do case insensitive matching
 vim.opt.smartcase = true --- Do smart case matching
 vim.opt.clipboard = "unnamedplus"
@@ -20,18 +21,25 @@ package.path = package.path .. ";C:\\tools\\nvim\\lua\\?.lua"
 -- keybinds for vsc---------------------------------------------
 -- Load Plugins ------------------------------------------------
 
- if pcall(require, 'nvim-treesitter') then
-   print('treesitter 模組已安裝')
- else
-   print('treesitter 模組未安裝')
- end
+-- if pcall(require, 'nvim-treesitter') then
+--   print('treesitter 模組已安裝')
+-- else
+--   print('treesitter 模組未安裝')
+-- end
+
+require("pluginsList.lua")
 
 if vim.g.vscode then
     -- VSCode extension
 	print('Vscode-nvim-init.lua 已成功配對')
-	require("pluginsList.lua")
+	require("PluginsList.lua")
 	require("Keymap.lua")
 	require("nvim-surround.lua")
+	require('ufo').setup({
+	    provider_selector = function(bufnr, filetype, buftype)
+		return {'treesitter', 'indent'}
+	    end
+	})
 	vim.api.nvim_set_keymap('i', '<C-[>', '<Esc>', { noremap = true })
 	vim.api.nvim_set_keymap('n', 'za', "<Cmd>lua vim.fn.VSCodeNotify('editor.toggleFold')<CR>", {silent = true})
 	vim.api.nvim_set_keymap('n', 'zR', "<Cmd>lua vim.fn.VSCodeNotify('editor.unfoldAll')<CR>", {silent = true})
@@ -70,7 +78,10 @@ if vim.g.vscode then
 else
 	require("PluginsList.lua")
 	require("Keymap.lua")
-	--require("nvim-treesitter.lua")
-	--require 'nvim-treesitter.install'.compilers = { "clang", "gcc" }
-    -- ordinary Neovim
+	require("nvim-surround.lua")
+	require('ufo').setup({
+	    provider_selector = function(bufnr, filetype, buftype)
+		return {'treesitter', 'indent'}
+	    end
+})
 end

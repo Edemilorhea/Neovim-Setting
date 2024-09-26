@@ -13,5 +13,3 @@ vim.api.nvim_set_keymap("n", "<Leader>qq", ":vsc Edit.FindinFiles<CR>", {noremap
 vim.api.nvim_set_keymap("n", "<Leader>xm", ":vsc View.Terminal<CR>", {noremap = true})
 -- 擴展選取
 vim.api.nvim_set_keymap("n", "<Leader>xx", ":vsc Edit.ExpandSelection<CR>", {noremap = true})
-
--- 針對vscode 摺疊功能

@@ -1,8 +1,8 @@
 local packer_exists = pcall(vim.cmd, [[packadd packer.nvim]])
+
 return require("packer").startup(
     function()
 	use {"wbthomason/packer.nvim", opt = true}
-	use {'nvim-treesitter/nvim-treesitter', run = ":TSUpdate"}
 	use {"folke/flash.nvim",
 		keys ={"<leader>hf","f", "R", "v"},
 		config = function()
@@ -20,13 +20,12 @@ return require("packer").startup(
 				flash.treesitter_search()
 			end, { desc = "Flash Treesitter Search", silent = true })
 
-			keymap.set({ "c" }, "<leader>hc", function()
+			keymap.set({ "n" }, "<leader>he", function()
 				flash.toggle()
 			end, { desc = "[H]op Toggle Flash Search", silent = true })
 		end
 	}
 	use {'kylechui/nvim-surround',tag="*"}
 	use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
-	--use {"nvim-tressitter/nvim-treesitter-textobjects", after="nvim/treesitter",requires = "nvim-treesitter/nvim-treesitter"}
     end
 )

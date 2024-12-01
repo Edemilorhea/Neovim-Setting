@@ -1,87 +1,62 @@
--- HELPERS ----------------------------------------------------
-local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
-local fn = vim.fn    -- to call Vim functions e.g. fn.bufnr()
-local g = vim.g      -- a table to access global variables
-local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
--- Set CMD ----------------------------------------------------
-cmd "syntax enable"
-cmd "syntax on"
-cmd "set number"
-vim.opt.fileencodings = "utf-8,big5,gbk,gb18030,gb2312,ucs-bom,cp936,euc-jp,euc-kr,shift-jis,latin1"
-vim.opt.encoding = "utf-8"
-vim.opt.langmenu = "zh_TW.UTF-8"
-vim.g.mapleader = "\\"
-vim.g.maplocalleader = "\\"
-vim.opt.ignorecase = true -- Do case insensitive matching
-vim.opt.smartcase = true --- Do smart case matching
-vim.opt.clipboard = "unnamedplus"
-vim.opt.backup = false --不備分文件
-vim.opt.relativenumber = true
-package.path = package.path .. ";C:\\tools\\nvim\\lua\\?.lua"
--- keybinds for vsc---------------------------------------------
+-- 設定基本變數
+local cmd = vim.cmd
+local fn = vim.fn
+local g = vim.g
+--
+-- 設置 Lua 模組路徑
+package.path = package.path
+    .. ";C:/tools/Neovim-Setting/lua/?.lua"
+    .. ";C:/tools/Neovim-Setting/lua/?/?.lua"
+    .. ";C:/tools/nvim/lua/?.lua"
+
+-- 設置折疊層級
+vim.o.foldlevel = 99               -- 設定折疊層級為 99
+vim.o.foldlevelstart = 99          -- 初始折疊層級為 99
+vim.opt.foldopen = ""              -- 禁用自動展開折疊
+vim.o.foldmethod = "syntax"        -- 設置折疊方式為 syntax
+
+-- 執行 Vim 命令
+cmd("syntax on")
+cmd("set number")
+
+-- 設定全域變數
+g.mapleader = "\\"                 -- 設置領導鍵
+g.maplocalleader = "\\"            -- 設置本地領導鍵
+
+-- 設定選項
+vim.opt.clipboard = "unnamedplus"  -- 使用系統剪貼簿
+vim.o.fileencodings = "utf-8,big5,gbk,gb18030,gb2312,ucs-bom,cp936,euc-jp,euc-kr,shift-jis,latin1"
+vim.o.encoding = "utf-8"           -- 設置編碼為 UTF-8
+vim.o.langmenu = "zh_TW.UTF-8"     -- 設置語言菜單為繁體中文
+vim.o.ignorecase = true            -- 搜索時忽略大小寫
+vim.o.smartcase = true             -- 大小寫敏感搜索
+vim.o.backup = false               -- 禁用備份文件
+vim.wo.relativenumber = true       -- 顯示相對行號
+vim.o.tabstop = 4                  -- 設置 Tab 寬度為 4 個空格
+vim.bo.expandtab = true            -- 使用空格代替 Tab
+vim.o.shiftwidth = 4               -- 設置縮排寬度為 4 個空格
+vim.wo.number = true               -- 顯示行號
+
 -- Load Plugins ------------------------------------------------
-
--- if pcall(require, 'nvim-treesitter') then
---   print('treesitter 模組已安裝')
--- else
---   print('treesitter 模組未安裝')
--- end
-
-require("pluginsList.lua")
-
-if vim.g.vscode then
-    -- VSCode extension
-	print('Vscode-nvim-init.lua 已成功配對')
-	require("PluginsList.lua")
-	require("Keymap.lua")
-	require("nvim-surround.lua")
-	require('ufo').setup({
-	    provider_selector = function(bufnr, filetype, buftype)
-		return {'treesitter', 'indent'}
-	    end
-	})
-	vim.api.nvim_set_keymap('i', '<C-[>', '<Esc>', { noremap = true })
-	vim.api.nvim_set_keymap('n', 'za', "<Cmd>lua vim.fn.VSCodeNotify('editor.toggleFold')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'zR', "<Cmd>lua vim.fn.VSCodeNotify('editor.unfoldAll')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'zM', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldAll')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'zo', "<Cmd>lua vim.fn.VSCodeNotify('editor.unfold')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'zO', "<Cmd>lua vim.fn.VSCodeNotify('editor.unfoldRecursively')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'zc', "<Cmd>lua vim.fn.VSCodeNotify('editor.fold')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'zC', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldRecursively')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'z1', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldLevel1')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'z2', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldLevel2')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'z3', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldLevel3')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'z4', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldLevel4')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'z5', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldLevel5')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'z6', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldLevel6')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'z7', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldLevel7')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('x', 'zV', "<Cmd>lua vim.fn.VSCodeNotify('editor.foldAllExcept')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'zj', "<Cmd>lua vim.fn.VSCodeNotify('editor.gotoNextFold')<CR>", {silent = true})
-	vim.api.nvim_set_keymap('n', 'zk', "<Cmd>lua vim.fn.VSCodeNotify('editor.gotoPreviousFold')<CR>", {silent = true})	
-
-	-- Normal mode mappings
-	vim.api.nvim_set_keymap('n', 'j', 'gj', { silent = true })
-	vim.api.nvim_set_keymap('n', 'k', 'gk', { silent = true })
-
-	-- Visual mode mappings
-	vim.api.nvim_set_keymap('v', 'j', 'gj', { silent = true })
-	vim.api.nvim_set_keymap('v', 'k', 'gk', { silent = true })
-
-	-- Normal mode mappings for <Down> and <Up>
-	vim.api.nvim_set_keymap('n', '<Down>', 'gj', { silent = true })
-	vim.api.nvim_set_keymap('n', '<Up>', 'gk', { silent = true })
-
-	-- Visual mode mappings for <Down> and <Up>
-	vim.api.nvim_set_keymap('v', '<Down>', 'gj', { silent = true })
-	vim.api.nvim_set_keymap('v', '<Up>', 'gk', { silent = true })
-
-else
-	require("PluginsList.lua")
-	require("Keymap.lua")
-	require("nvim-surround.lua")
-	require('ufo').setup({
-	    provider_selector = function(bufnr, filetype, buftype)
-		return {'treesitter', 'indent'}
-	    end
-})
-end
+ 
+ if vim.g.vscode then
+     -- VSCode extension
+ 	print('Vscode-nvim-init.lua 已成功配對')
+ 	require("PluginsList")
+ 	require("Keymap")
+ 	require('ufo').setup({
+ 	    provider_selector = function(bufnr, filetype, buftype)
+ 		return {'treesitter', 'indent'}
+ 	    end
+ 	})
+     require("Keymap.VSCKeymap")
+ else
+ 	require("PluginsList")
+    require("Keymap")
+ 	require("nvim-tree")
+ 	require('ufo').setup({
+ 	    provider_selector = function(bufnr, filetype, buftype)
+ 		return {'treesitter', 'indent'}
+ 	    end
+ })
+ end

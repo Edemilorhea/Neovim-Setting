@@ -2,7 +2,7 @@
 local cmd = vim.cmd
 local fn = vim.fn
 local g = vim.g
---
+
 -- 設置 Lua 模組路徑
 package.path = package.path
     .. ";C:/tools/Neovim-Setting/lua/?.lua"
@@ -10,11 +10,17 @@ package.path = package.path
     .. ";C:/tools/nvim/lua/?.lua"
 
 -- 設置折疊層級
-vim.o.foldlevel = 99               -- 設定折疊層級為 99
 vim.o.foldlevelstart = 99          -- 初始折疊層級為 99
-vim.opt.foldopen = ""              -- 禁用自動展開折疊
-vim.o.foldmethod = "syntax"        -- 設置折疊方式為 syntax
-
+vim.o.foldcolumn = '1' -- '0' is not bad
+-- 使用表達式摺疊
+vim.o.foldmethod = 'expr'
+-- Treesitter 提供的摺疊表達式
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+-- 啟用摺疊功能
+vim.o.foldenable = true
+-- 預設展開所有摺疊
+vim.o.foldlevel = 99
+--
 -- 執行 Vim 命令
 cmd("syntax on")
 cmd("set number")
@@ -54,6 +60,7 @@ vim.wo.number = true               -- 顯示行號
  	require("PluginsList")
     require("Keymap")
  	require("nvim-tree")
+	require("PluginsList.neovimorg")
  	require('ufo').setup({
  	    provider_selector = function(bufnr, filetype, buftype)
  		return {'treesitter', 'indent'}

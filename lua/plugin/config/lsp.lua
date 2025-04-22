@@ -37,7 +37,12 @@ function M.setup()
             ["<C-y>"] = cmp.mapping.confirm({
                 select = true
             }),
-            ["<C-Space>"] = cmp.mapping.complete()
+            ["<C-Space>"] = cmp.mapping.complete(),
+            ["<Tab>"] = cmp.mapping.select_next_item(),
+            ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+            ["<CR>"] = cmp.mapping.confirm({
+                select = true
+            })
         }),
         sources = cmp.config.sources({{
             name = "nvim_lsp"
@@ -50,14 +55,11 @@ function M.setup()
         }})
     })
 
-    -- null-ls
-    local null_ls = require("null-ls")
-    null_ls.setup({
-        sources = {null_ls.builtins.formatting.prettier, -- html/css/js/vue
-        null_ls.builtins.diagnostics.eslint, -- eslint
-        null_ls.builtins.formatting.black -- python
-        }
-    })
+    local ok, nullls_config = pcall(require, "plugin.config.null-ls")
+    if ok then
+        nullls_config.setup()
+    end
+
 end
 
 return M

@@ -1,4 +1,3 @@
--- mason.lua => 重構為 plugin/config/mason.lua，模組化與保護機制
 local M = {}
 local mason_enabled = false
 
@@ -12,7 +11,7 @@ function M.enable()
     local ok_mason_lsp, mason_lspconfig = pcall(require, "mason-lspconfig")
     local ok_lspconfig, lspconfig = pcall(require, "lspconfig")
     if not (ok_mason and ok_mason_lsp and ok_lspconfig) then
-        vim.notify("[Mason] 載入失敗，請確認 mason/mason-lspconfig/lspconfig 是否安裝")
+        vim.notify("[Mason] 載入失敗，請確認 mason / mason-lspconfig / lspconfig 是否安裝")
         return
     end
 
@@ -28,7 +27,8 @@ function M.enable()
     })
 
     mason_lspconfig.setup({
-        ensure_installed = {"lua_ls", "jsonls", "tsserver", "omnisharp", "pylsp"},
+        ensure_installed = {"lua_ls", "jsonls", "ts_ls", "html", "cssls", "volar", "emmet_ls", "eslint", "omnisharp",
+                            "pyright"},
         automatic_installation = false
     })
 
@@ -41,7 +41,8 @@ function M.enable()
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
     end
 
-    -- OmniSharp（C#）特例處理
+    -- 特別處理 C#：OmniSharp
+    local ok_ext, omnisharp_extended = pcall(require, "omnisharp_extended")
     local omnisharp_path = vim.fn.stdpath("data") .. "/mason/bin/omnisharp"
     if vim.fn.has("win32") == 1 then
         omnisharp_path = omnisharp_path .. ".cmd"
@@ -53,7 +54,13 @@ function M.enable()
         enable_roslyn_analyzers = true,
         enable_import_completion = true,
         organize_imports_on_format = true,
-        on_attach = on_attach
+        on_attach = on_attach,
+        handlers = ok_ext and {
+            ["textDocument/definition"] = omnisharp_extended.definition_handler,
+            ["textDocument/typeDefinition"] = omnisharp_extended.type_definition_handler,
+            ["textDocument/references"] = omnisharp_extended.references_handler,
+            ["textDocument/implementation"] = omnisharp_extended.implementation_handler
+        } or nil
     })
 
     mason_lspconfig.setup_handlers({
@@ -93,5 +100,24 @@ function M.disable()
     vim.notify("[Mason] 所有 LSP 已停止")
 end
 
-return M
+function M.toggle()
+    if mason_enabled then
+        M.disable()
+    else
+        M.enable()
+    end
+end
 
+-- 若不是在 vscode 中，自動啟用 mason
+if not vim.g.vscode then
+    vim.schedule(function()
+        require("plugin.config.mason").enable()
+    end)
+end
+
+-- 可用 :MasonToggle 切換
+vim.api.nvim_create_user_command("MasonToggle", function()
+    require("plugin.config.mason").toggle()
+end, {})
+
+return M

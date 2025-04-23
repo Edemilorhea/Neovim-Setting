@@ -42,4 +42,22 @@ function M.toggle()
     end
 end
 
+-- 自定義指令（切換啟用/停用開發模組）
+vim.api.nvim_create_user_command("ToggleDevConfig", function()
+    require("plugin.config.customCall").toggle()
+end, {})
+
+-- 自訂義指令 （格式化程式碼）
+vim.api.nvim_create_user_command("FormatCode", function()
+  vim.lsp.buf.format({ async = true })
+end, {})
+
+-- 自訂義指令 （保存時格式化程式碼）
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.lua",
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end,
+})
+
 return M

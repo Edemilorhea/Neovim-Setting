@@ -6,7 +6,7 @@ require("core.options")
 require("keymap").setup()
 require("keymap.hotKeyMaps").setup()
 if is_vscode then
-    require("keymap.vscode").setup()
+	require("keymap.vscode").setup()
 end
 
 -- 插件列表載入
@@ -28,21 +28,20 @@ local lualine = require("plugin.config.lualine")
 local telescope = require("plugin.config.telescope")
 local nvimtree = require("plugin.config.nvimtree")
 local peek = require("plugin.config.peek")
+local obsidian = require("plugin.config.obsidian")
+local lazygit = require("plugin.config.lazygit")
 
 if not is_vscode then
-    mason.enable()
-    treesitter.setup()
-    ufo.setup()
-    lsp.setup()
-    null_ls.setup()
-    bufferline.setup()
-    lualine.setup()
-    telescope.setup()
-    nvimtree.setup()
-    peek.setup()
+	mason.enable()
+	treesitter.setup()
+	ufo.setup()
+	lsp.setup()
+	null_ls.setup()
+	bufferline.setup()
+	lualine.setup()
+	telescope.setup()
+	nvimtree.setup()
+	peek.setup()
+	obsidian.setup()
+	lazygit.setup()
 end
-
--- 自定義指令（切換啟用/停用開發模組）
-vim.api.nvim_create_user_command("ToggleDevConfig", function()
-    require("plugin.config.customCall").toggle()
-end, {})

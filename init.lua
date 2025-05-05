@@ -1,6 +1,8 @@
 -- init.lua：完整啟動模組化設定
 local is_vscode = vim.g.vscode == 1
 
+vim.opt_local.formatoptions:append({ "n" })
+
 -- 通用設定
 require("core.options")
 require("keymap").setup()
@@ -30,6 +32,9 @@ local nvimtree = require("plugin.config.nvimtree")
 local peek = require("plugin.config.peek")
 local obsidian = require("plugin.config.obsidian")
 local lazygit = require("plugin.config.lazygit")
+local markdown = require("plugin.config.markdown")
+local customCall = require("plugin.config.customCall")
+-- local comment = require("plugin.config.comment")
 
 if not is_vscode then
 	mason.enable()
@@ -44,4 +49,7 @@ if not is_vscode then
 	peek.setup()
 	obsidian.setup()
 	lazygit.setup()
+	markdown.setup()
+	-- comment.setup()
+	vim.opt.conceallevel = 2
 end

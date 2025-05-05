@@ -1,5 +1,8 @@
 # Neovim-Setting
 
+1. abc
+2. abc
+
 原始版本無框架的 Neovim 設定檔。
 
 > Clone 完 要將資料夾改成 nvim

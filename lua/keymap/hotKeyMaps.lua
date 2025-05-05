@@ -106,4 +106,6 @@ function M.setup()
 	})
 end
 
+vim.keymap.set("n", "<leader>mp", "<cmd>Glow<CR>", { desc = "Markdown 預覽" })
+
 return M

@@ -1,9 +1,10 @@
--- ~/.config/nvim/lua/plugin/config/obsidian.lua
-
 local M = {}
 
 function M.setup()
 	local home = vim.fn.expand("~")
+
+	-- ✅ 必須設 conceallevel 才會啟用美化顯示
+	vim.opt.conceallevel = 2
 
 	require("obsidian").setup({
 		workspaces = {
@@ -16,7 +17,7 @@ function M.setup()
 		notes_subdir = "notes",
 
 		daily_notes = {
-			folder = "notes/dailies",
+			folder = "notes\\dailies",
 			date_format = "%Y-%m-%d",
 			alias_format = "%B %-d, %Y",
 			default_tags = { "daily-notes" },
@@ -70,7 +71,7 @@ function M.setup()
 		preferred_link_style = "wiki",
 
 		templates = {
-			folder = "templates",
+			folder = vim.fn.expand("~/Documents/Obsidian Vault/templates"),
 			date_format = "%Y-%m-%d",
 			time_format = "%H:%M",
 			substitutions = {
@@ -83,17 +84,17 @@ function M.setup()
 		ui = {
 			enable = true,
 			checkboxes = {
-				[" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-				["x"] = { char = "", hl_group = "ObsidianDone" },
-				[">"] = { char = "", hl_group = "ObsidianRightArrow" },
-				["~"] = { char = "󰰱", hl_group = "ObsidianTilde" },
-				["!"] = { char = "", hl_group = "ObsidianImportant" },
+				[" "] = { char = "☐", hl_group = "ObsidianTodo" },
+				["x"] = { char = "☑", hl_group = "ObsidianDone" },
+				[">"] = { char = "➤", hl_group = "ObsidianRightArrow" },
+				["~"] = { char = "∼", hl_group = "ObsidianTilde" },
+				["!"] = { char = "!", hl_group = "ObsidianImportant" },
 			},
 			bullets = { char = "•", hl_group = "ObsidianBullet" },
 		},
 
 		attachments = {
-			img_folder = "assets/imgs",
+			img_folder = "assets\\imgs",
 			img_name_func = function()
 				return string.format("%s-", os.time())
 			end,

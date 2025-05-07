@@ -1,7 +1,12 @@
+---@diagnostic disable-next-line: undefined-global
+vim = vim
 -- init.lua：完整啟動模組化設定
 local is_vscode = vim.g.vscode == 1
-
+vim.keymap.set("n", "<Esc>", "<Esc>:nohlsearch<CR>", { silent = true })
 vim.opt_local.formatoptions:append({ "n" })
+
+-- 插件列表載入
+require("PluginsList")
 
 -- 通用設定
 require("core.options")
@@ -10,9 +15,6 @@ require("keymap.hotKeyMaps").setup()
 if is_vscode then
 	require("keymap.vscode").setup()
 end
-
--- 插件列表載入
-require("PluginsList")
 
 -- 通用插件（VSCode + Neovim 都載入）
 require("plugin.config.flash").setup()

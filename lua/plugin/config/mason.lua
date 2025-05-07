@@ -3,18 +3,18 @@ local mason_enabled = false
 
 function M.enable()
 	if mason_enabled then
-		vim.notify("[Mason] 已經啟用，略過重複設定")
+		--vim.notify("[Mason] 已經啟用，略過重複設定")
 		return
 	end
 
-	local ok_mason, mason = pcall(require, "mason")
-	local ok_mason_lsp, mason_lspconfig = pcall(require, "mason-lspconfig")
-	local ok_lspconfig, lspconfig = pcall(require, "lspconfig")
-	if not (ok_mason and ok_mason_lsp and ok_lspconfig) then
-		vim.notify("[Mason] 載入失敗，請確認 mason / mason-lspconfig / lspconfig 是否安裝")
+	-- 確保所有必要的插件都已安裝
+	local status_mason, mason = pcall(require, "mason")
+	if not status_mason then
+		vim.notify("[Mason] 無法載入 mason 插件", vim.log.levels.ERROR)
 		return
 	end
 
+	-- 設定 mason
 	mason.setup({
 		ui = {
 			border = "rounded",
@@ -26,6 +26,21 @@ function M.enable()
 		},
 	})
 
+	-- 分開載入 mason-lspconfig
+	local status_mason_lspconfig, mason_lspconfig = pcall(require, "mason-lspconfig")
+	if not status_mason_lspconfig then
+		vim.notify("[Mason] 無法載入 mason-lspconfig 插件", vim.log.levels.ERROR)
+		return
+	end
+
+	-- 分開載入 lspconfig
+	local status_lspconfig, lspconfig = pcall(require, "lspconfig")
+	if not status_lspconfig then
+		vim.notify("[Mason] 無法載入 lspconfig 插件", vim.log.levels.ERROR)
+		return
+	end
+
+	-- 設定 mason-lspconfig
 	mason_lspconfig.setup({
 		ensure_installed = {
 			"lua_ls",
@@ -55,6 +70,7 @@ function M.enable()
 	-- 特別處理 C#：OmniSharp
 	local ok_ext, omnisharp_extended = pcall(require, "omnisharp_extended")
 	local omnisharp_path = vim.fn.stdpath("data") .. "/mason/bin/omnisharp"
+
 	if vim.fn.has("win32") == 1 then
 		omnisharp_path = omnisharp_path .. ".cmd"
 	end
@@ -74,34 +90,40 @@ function M.enable()
 		} or nil,
 	})
 
-	mason_lspconfig.setup_handlers({
-		function(server_name)
-			if server_name ~= "omnisharp" then
-				lspconfig[server_name].setup({
-					on_attach = on_attach,
-				})
-			end
-		end,
-		["lua_ls"] = function()
-			lspconfig.lua_ls.setup({
-				on_attach = on_attach,
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = { "vim" },
-						},
-					},
+	-- 設定各個 LSP Server
+	lspconfig.lua_ls.setup({
+		on_attach = on_attach,
+		settings = {
+			Lua = {
+				diagnostics = {
+					globals = { "vim" },
 				},
-			})
-		end,
-		-- ✅ marksman 設定（Markdown）
-		["marksman"] = function()
-			lspconfig.marksman.setup({
-				on_attach = on_attach,
-				filetypes = { "markdown" },
-			})
-		end,
+			},
+		},
 	})
+
+	lspconfig.marksman.setup({
+		on_attach = on_attach,
+		filetypes = { "markdown" },
+	})
+
+	-- 設定其他 LSP servers
+	local servers = {
+		"jsonls",
+		"ts_ls",
+		"html",
+		"cssls",
+		"volar",
+		"emmet_ls",
+		"eslint",
+		"pyright",
+	}
+
+	for _, server in ipairs(servers) do
+		lspconfig[server].setup({
+			on_attach = on_attach,
+		})
+	end
 
 	mason_enabled = true
 	vim.notify("[Mason] 啟用成功")
@@ -111,9 +133,12 @@ function M.disable()
 	if not mason_enabled then
 		return
 	end
-	for _, client in pairs(vim.lsp.get_active_clients()) do
+
+	-- 使用正確的 API 名稱
+	for _, client in pairs(vim.lsp.get_clients()) do
 		client.stop()
 	end
+
 	mason_enabled = false
 	vim.notify("[Mason] 所有 LSP 已停止")
 end

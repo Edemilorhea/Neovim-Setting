@@ -55,9 +55,9 @@ end, {})
 -- 自訂義指令 （保存時格式化程式碼）
 vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function(args)
-		local client = vim.lsp.get_active_clients({ bufnr = args.buf })
-		for _, c in ipairs(client) do
-			if c.supports_method("textDocument/formatting") then
+		local clients = vim.lsp.get_clients({ bufnr = args.buf }) -- ✅ 新寫法
+		for _, client in ipairs(clients) do
+			if client:supports_method("textDocument/formatting") then -- ✅ 新寫法
 				vim.lsp.buf.format({ bufnr = args.buf, async = false })
 				return
 			end

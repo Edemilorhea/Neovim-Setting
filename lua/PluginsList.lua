@@ -232,9 +232,9 @@ return require("packer").startup(function(use)
 
 			vim.keymap.set("v", "p", "p<Cmd>AutolistRecalculate<CR>", { desc = "Paste Visual + Autolist Recalc" }) -- 貼上後可能也需要
 
-			vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>") -- 不設定這個
-			vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr><Esc>") -- 不設定這個
-			vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr><Esc>") -- 不設定這個
+			vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>")                                 -- 不設定這個
+			vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr><Esc>")                                  -- 不設定這個
+			vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr><Esc>")                            -- 不設定這個
 		end,
 	})
 
@@ -256,6 +256,21 @@ return require("packer").startup(function(use)
 			end,
 		}
 	)
+	use({
+		'MeanderingProgrammer/render-markdown.nvim',
+		after = { 'nvim-treesitter' },
+		requires = { 'echasnovski/mini.nvim', opt = true }, -- if you use the mini.nvim suite
+		-- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
+		-- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
+		config = function()
+			require('render-markdown').setup({})
+		end,
+	})
+
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = function() vim.fn["mkdp#util#install"]() end,
+	})
 
 	-- 加入 symbols-outline.nvim 插件，使用 use({}) 語法
 	use({
@@ -335,6 +350,9 @@ return require("packer").startup(function(use)
 		-- 如果你選擇了延遲載入，保持 cmd 或 event 在這裡
 		-- cmd = "SymbolsOutline",
 	}) -- <-- 注意這裡的結束括號和圓括號
+
+
+
 
 	if packer_bootstrap then
 		require("packer").sync()

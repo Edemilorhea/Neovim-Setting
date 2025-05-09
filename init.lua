@@ -13,12 +13,12 @@ require("core.options")
 require("keymap").setup()
 require("keymap.hotKeyMaps").setup()
 if is_vscode then
-	require("keymap.vscode").setup()
+    require("keymap.vscode").setup()
 end
 
 -- 通用插件（VSCode + Neovim 都載入）
 require("plugin.config.flash").setup()
-require("plugin.config.imselect").setup()
+-- require("plugin.config.imselect").setup()
 require("plugin.config.surround").setup()
 
 -- LSP 與開發工具模組（條件載入）
@@ -39,19 +39,19 @@ local customCall = require("plugin.config.customCall")
 -- local comment = require("plugin.config.comment")
 
 if not is_vscode then
-	mason.enable()
-	treesitter.setup()
-	ufo.setup()
-	lsp.setup()
-	null_ls.setup()
-	bufferline.setup()
-	lualine.setup()
-	telescope.setup()
-	nvimtree.setup()
-	peek.setup()
-	obsidian.setup()
-	lazygit.setup()
-	markdown.setup()
-	-- comment.setup()
-	vim.opt.conceallevel = 2
+    mason.enable()
+    treesitter.setup()
+    ufo.setup()
+    lsp.setup()
+    null_ls.setup()
+    bufferline.setup()
+    lualine.setup()
+    telescope.setup()
+    nvimtree.setup()
+    peek.setup()
+    obsidian.setup()
+    lazygit.setup()
+    markdown.setup()
+    -- comment.setup()
+    vim.opt.conceallevel = 2
 end

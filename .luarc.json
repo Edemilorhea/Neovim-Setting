@@ -1,0 +1,9 @@
+{
+  "workspace": {
+    "library": ["${3rd}/luv/library", "${3rd}/vim/library"]
+  },
+  "globals": ["vim"],
+    "diagnostics.globals": [
+        "vim"
+    ]
+}

@@ -16,9 +16,13 @@ return require("packer").startup(function(use)
 
     use({
         "williamboman/mason.nvim",
-        requires = { "williamboman/mason-lspconfig.nvim", "neovim/nvim-lspconfig" },
+        tag = "v1.8.3", -- ✅ 最新 v1 穩定版（或你想要的其他 v1.x.x）
     })
-
+    use({
+        "williamboman/mason-lspconfig.nvim",
+        tag = "v1.3.0", -- ✅ 第一個支援 setup_handlers 的版本
+        requires = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+    })
     use({
         "hrsh7th/nvim-cmp",
         requires = {
@@ -232,9 +236,9 @@ return require("packer").startup(function(use)
 
             vim.keymap.set("v", "p", "p<Cmd>AutolistRecalculate<CR>", { desc = "Paste Visual + Autolist Recalc" }) -- 貼上後可能也需要
 
-            vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>")                                          -- 不設定這個
-            vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr><Esc>")                                           -- 不設定這個
-            vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr><Esc>")                                     -- 不設定這個
+            vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>")                                 -- 不設定這個
+            vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr><Esc>")                                  -- 不設定這個
+            vim.keymap.set("n", "O", "O<cmd>AutolistNewBulletBefore<cr><Esc>")                            -- 不設定這個
         end,
     })
 
@@ -257,19 +261,21 @@ return require("packer").startup(function(use)
         }
     )
     use({
-        'MeanderingProgrammer/render-markdown.nvim',
-        after = { 'nvim-treesitter' },
-        requires = { 'echasnovski/mini.nvim', opt = true }, -- if you use the mini.nvim suite
+        "MeanderingProgrammer/render-markdown.nvim",
+        after = { "nvim-treesitter" },
+        requires = { "echasnovski/mini.nvim", opt = true }, -- if you use the mini.nvim suite
         -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
         -- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
         config = function()
-            require('render-markdown').setup({})
+            require("render-markdown").setup({})
         end,
     })
 
     use({
         "iamcco/markdown-preview.nvim",
-        run = function() vim.fn["mkdp#util#install"]() end,
+        run = function()
+            vim.fn["mkdp#util#install"]()
+        end,
     })
 
     -- 加入 symbols-outline.nvim 插件，使用 use({}) 語法
@@ -362,14 +368,14 @@ return require("packer").startup(function(use)
         end,
     })
 
-    use({
-        "rachartier/tiny-inline-diagnostic.nvim",
-        event = "BufReadPost", -- ✅ Neovim 內建事件
-        config = function()
-            require("tiny-inline-diagnostic").setup()
-            vim.diagnostic.config({ virtual_text = false })
-        end,
-    })
+    -- use({
+    --     "rachartier/tiny-inline-diagnostic.nvim",
+    --     event = "BufReadPost", -- ✅ Neovim 內建事件
+    --     config = function()
+    --         require("tiny-inline-diagnostic").setup()
+    --         vim.diagnostic.config({ virtual_text = false })
+    --     end,
+    -- })
 
     if packer_bootstrap then
         require("packer").sync()

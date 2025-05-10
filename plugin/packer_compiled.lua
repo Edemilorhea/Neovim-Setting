@@ -75,7 +75,7 @@ time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
   ["Comment.nvim"] = {
-    config = { "\27LJ\2\nS\0\0\3\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0009\0\4\0B\0\1\1K\0\1\0\fcurrent\rlinewise\vtoggle\16Comment.api\frequire�\2\1\0\6\0\r\0\0226\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0003\4\b\0005\5\t\0B\0\5\0016\0\3\0009\0\4\0009\0\5\0'\2\n\0'\3\a\0'\4\v\0005\5\f\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2R<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>\6v\1\0\2\fnoremap\2\vsilent\2\0\n<C-_>\6n\bset\vkeymap\bvim\nsetup\fComment\frequire\0" },
+    config = { "\27LJ\2\nS\0\0\3\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0009\0\4\0B\0\1\1K\0\1\0\fcurrent\rlinewise\vtoggle\16Comment.api\frequire�\2\1\0\6\0\r\0\0226\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0003\4\b\0005\5\t\0B\0\5\0016\0\3\0009\0\4\0009\0\5\0'\2\n\0'\3\a\0'\4\v\0005\5\f\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2R<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>\6v\1\0\2\vsilent\2\fnoremap\2\0\n<C-_>\6n\bset\vkeymap\bvim\nsetup\fComment\frequire\0" },
     loaded = true,
     path = "C:\\Users\\TC\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\Comment.nvim",
     url = "https://github.com/numToStr/Comment.nvim"
@@ -125,7 +125,7 @@ _G.packer_plugins = {
   },
   ["glow.nvim"] = {
     commands = { "Glow" },
-    config = { "\27LJ\2\nS\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\npager\1\nstyle\tdark\nwidth\3x\nsetup\tglow\frequire\0" },
+    config = { "\27LJ\2\nS\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\nstyle\tdark\nwidth\3x\npager\1\nsetup\tglow\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -146,7 +146,7 @@ _G.packer_plugins = {
     url = "https://github.com/kdheepak/lazygit.nvim"
   },
   ["lsp_signature.nvim"] = {
-    config = { "\27LJ\2\nr\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\16hint_prefix\n💡 \20floating_window\1\16hint_enable\2\nsetup\18lsp_signature\frequire\0" },
+    config = { "\27LJ\2\nr\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\20floating_window\1\16hint_enable\2\16hint_prefix\n💡 \nsetup\18lsp_signature\frequire\0" },
     loaded = true,
     path = "C:\\Users\\TC\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lsp_signature.nvim",
     url = "https://github.com/ray-x/lsp_signature.nvim"
@@ -270,7 +270,7 @@ _G.packer_plugins = {
     url = "https://github.com/MeanderingProgrammer/render-markdown.nvim"
   },
   ["symbols-outline.nvim"] = {
-    config = { "\27LJ\2\n�\14\0\0\4\0B\0H5\0\0\0005\1\1\0=\1\2\0005\1\4\0005\2\3\0=\2\5\1=\1\6\0004\1\0\0=\1\a\0004\1\0\0=\1\b\0005\1\n\0005\2\t\0=\2\v\0015\2\f\0=\2\r\0015\2\14\0=\2\15\0015\2\16\0=\2\17\0015\2\18\0=\2\19\0015\2\20\0=\2\21\0015\2\22\0=\2\23\0015\2\24\0=\2\25\0015\2\26\0=\2\27\0015\2\28\0=\2\29\0015\2\30\0=\2\31\0015\2 \0=\2!\0015\2\"\0=\2#\0015\2$\0=\2%\0015\2&\0=\2'\0015\2(\0=\2)\0015\2*\0=\2+\0015\2,\0=\2-\0015\2.\0=\2/\0015\0020\0=\0021\0015\0022\0=\0023\0015\0024\0=\0025\0015\0026\0=\0027\0015\0028\0=\0029\0015\2:\0=\2;\0015\2<\0=\2=\1=\1>\0006\1?\0'\3@\0B\1\2\0029\1A\1\18\3\0\0B\1\2\1K\0\1\0\nsetup\20symbols-outline\frequire\fsymbols\14Component\1\0\2\ticon\b\ahl\14@function\18TypeParameter\1\0\2\ticon\t𝙏\ahl\15@parameter\nEvent\1\0\2\ticon\t🗲\ahl\n@type\vStruct\1\0\2\ticon\t𝓢\ahl\n@type\15EnumMember\1\0\2\ticon\b\ahl\v@field\tNull\1\0\2\ticon\tNULL\ahl\n@type\bKey\1\0\2\ticon\t🔐\ahl\n@type\vObject\1\0\2\ticon\b⦿\ahl\n@type\nArray\1\0\2\ticon\b\ahl\14@constant\fBoolean\1\0\2\ticon\b⊨\ahl\r@boolean\vNumber\1\0\2\ticon\6#\ahl\f@number\vString\1\0\2\ticon\t𝓐\ahl\f@string\rConstant\1\0\2\ticon\b\ahl\14@constant\rVariable\1\0\2\ticon\b\ahl\14@constant\rFunction\1\0\2\ticon\b\ahl\14@function\14Interface\1\0\2\ticon\bﰮ\ahl\n@type\tEnum\1\0\2\ticon\bℰ\ahl\n@type\16Constructor\1\0\2\ticon\b\ahl\17@constructor\nField\1\0\2\ticon\b\ahl\v@field\rProperty\1\0\2\ticon\b\ahl\f@method\vMethod\1\0\2\ticon\aƒ\ahl\f@method\nClass\1\0\2\ticon\t𝓒\ahl\n@type\fPackage\1\0\2\ticon\b\ahl\15@namespace\14Namespace\1\0\2\ticon\b\ahl\15@namespace\vModule\1\0\2\ticon\b\ahl\15@namespace\tFile\1\0\26\nEvent\0\vStruct\0\16Constructor\0\vObject\0\15EnumMember\0\nField\0\tNull\0\rProperty\0\bKey\0\14Component\0\vMethod\0\nArray\0\nClass\0\fBoolean\0\fPackage\0\vNumber\0\14Namespace\0\vString\0\vModule\0\rConstant\0\tFile\0\rVariable\0\rFunction\0\14Interface\0\18TypeParameter\0\tEnum\0\1\0\2\ticon\b\ahl\14@text.uri\21symbol_blacklist\18lsp_blacklist\fkeymaps\nclose\1\0\f\nclose\0\tfold\6h\17code_actions\6a\18rename_symbol\6r\15fold_reset\6R\19toggle_preview\6K\17hover_symbol\14<C-space>\19focus_location\6o\18goto_location\t<Cr>\15unfold_all\6E\rfold_all\6W\vunfold\6l\1\3\0\0\n<Esc>\6q\17fold_markers\1\3\0\0\b\b\1\0\18\17auto_preview\1\15auto_close\1\21symbol_blacklist\0\fsymbols\0\fkeymaps\0\17fold_markers\0\22auto_unfold_hover\2\25preview_bg_highlight\nPmenu\24show_symbol_details\2\26show_relative_numbers\1\17show_numbers\1\nwidth\3\25\19relative_width\2\rposition\nright\18lsp_blacklist\0\16show_guides\2\27highlight_hovered_item\2\twrap\1\0" },
+    config = { "\27LJ\2\n�\14\0\0\4\0B\0H5\0\0\0005\1\1\0=\1\2\0005\1\4\0005\2\3\0=\2\5\1=\1\6\0004\1\0\0=\1\a\0004\1\0\0=\1\b\0005\1\n\0005\2\t\0=\2\v\0015\2\f\0=\2\r\0015\2\14\0=\2\15\0015\2\16\0=\2\17\0015\2\18\0=\2\19\0015\2\20\0=\2\21\0015\2\22\0=\2\23\0015\2\24\0=\2\25\0015\2\26\0=\2\27\0015\2\28\0=\2\29\0015\2\30\0=\2\31\0015\2 \0=\2!\0015\2\"\0=\2#\0015\2$\0=\2%\0015\2&\0=\2'\0015\2(\0=\2)\0015\2*\0=\2+\0015\2,\0=\2-\0015\2.\0=\2/\0015\0020\0=\0021\0015\0022\0=\0023\0015\0024\0=\0025\0015\0026\0=\0027\0015\0028\0=\0029\0015\2:\0=\2;\0015\2<\0=\2=\1=\1>\0006\1?\0'\3@\0B\1\2\0029\1A\1\18\3\0\0B\1\2\1K\0\1\0\nsetup\20symbols-outline\frequire\fsymbols\14Component\1\0\2\ahl\14@function\ticon\b\18TypeParameter\1\0\2\ahl\15@parameter\ticon\t𝙏\nEvent\1\0\2\ahl\n@type\ticon\t🗲\vStruct\1\0\2\ahl\n@type\ticon\t𝓢\15EnumMember\1\0\2\ahl\v@field\ticon\b\tNull\1\0\2\ahl\n@type\ticon\tNULL\bKey\1\0\2\ahl\n@type\ticon\t🔐\vObject\1\0\2\ahl\n@type\ticon\b⦿\nArray\1\0\2\ahl\14@constant\ticon\b\fBoolean\1\0\2\ahl\r@boolean\ticon\b⊨\vNumber\1\0\2\ahl\f@number\ticon\6#\vString\1\0\2\ahl\f@string\ticon\t𝓐\rConstant\1\0\2\ahl\14@constant\ticon\b\rVariable\1\0\2\ahl\14@constant\ticon\b\rFunction\1\0\2\ahl\14@function\ticon\b\14Interface\1\0\2\ahl\n@type\ticon\bﰮ\tEnum\1\0\2\ahl\n@type\ticon\bℰ\16Constructor\1\0\2\ahl\17@constructor\ticon\b\nField\1\0\2\ahl\v@field\ticon\b\rProperty\1\0\2\ahl\f@method\ticon\b\vMethod\1\0\2\ahl\f@method\ticon\aƒ\nClass\1\0\2\ahl\n@type\ticon\t𝓒\fPackage\1\0\2\ahl\15@namespace\ticon\b\14Namespace\1\0\2\ahl\15@namespace\ticon\b\vModule\1\0\2\ahl\15@namespace\ticon\b\tFile\1\0\26\tFile\0\vObject\0\rFunction\0\vStruct\0\14Interface\0\18TypeParameter\0\tEnum\0\nEvent\0\14Component\0\16Constructor\0\15EnumMember\0\nField\0\tNull\0\rProperty\0\bKey\0\vMethod\0\nArray\0\nClass\0\fBoolean\0\fPackage\0\vNumber\0\14Namespace\0\vString\0\vModule\0\rConstant\0\rVariable\0\1\0\2\ahl\14@text.uri\ticon\b\21symbol_blacklist\18lsp_blacklist\fkeymaps\nclose\1\0\f\vunfold\6l\17hover_symbol\14<C-space>\19focus_location\6o\15fold_reset\6R\18goto_location\t<Cr>\15unfold_all\6E\rfold_all\6W\nclose\0\tfold\6h\17code_actions\6a\18rename_symbol\6r\19toggle_preview\6K\1\3\0\0\n<Esc>\6q\17fold_markers\1\3\0\0\b\b\1\0\18\15auto_close\1\19relative_width\2\rposition\nright\18lsp_blacklist\0\16show_guides\2\27highlight_hovered_item\2\17auto_preview\1\22auto_unfold_hover\2\21symbol_blacklist\0\fsymbols\0\fkeymaps\0\17fold_markers\0\nwidth\3\25\twrap\1\25preview_bg_highlight\nPmenu\24show_symbol_details\2\26show_relative_numbers\1\17show_numbers\1\0" },
     loaded = true,
     path = "C:\\Users\\TC\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\symbols-outline.nvim",
     url = "https://github.com/simrat39/symbols-outline.nvim"
@@ -301,6 +301,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: symbols-outline.nvim
+time([[Config for symbols-outline.nvim]], true)
+try_loadstring("\27LJ\2\n�\14\0\0\4\0B\0H5\0\0\0005\1\1\0=\1\2\0005\1\4\0005\2\3\0=\2\5\1=\1\6\0004\1\0\0=\1\a\0004\1\0\0=\1\b\0005\1\n\0005\2\t\0=\2\v\0015\2\f\0=\2\r\0015\2\14\0=\2\15\0015\2\16\0=\2\17\0015\2\18\0=\2\19\0015\2\20\0=\2\21\0015\2\22\0=\2\23\0015\2\24\0=\2\25\0015\2\26\0=\2\27\0015\2\28\0=\2\29\0015\2\30\0=\2\31\0015\2 \0=\2!\0015\2\"\0=\2#\0015\2$\0=\2%\0015\2&\0=\2'\0015\2(\0=\2)\0015\2*\0=\2+\0015\2,\0=\2-\0015\2.\0=\2/\0015\0020\0=\0021\0015\0022\0=\0023\0015\0024\0=\0025\0015\0026\0=\0027\0015\0028\0=\0029\0015\2:\0=\2;\0015\2<\0=\2=\1=\1>\0006\1?\0'\3@\0B\1\2\0029\1A\1\18\3\0\0B\1\2\1K\0\1\0\nsetup\20symbols-outline\frequire\fsymbols\14Component\1\0\2\ahl\14@function\ticon\b\18TypeParameter\1\0\2\ahl\15@parameter\ticon\t𝙏\nEvent\1\0\2\ahl\n@type\ticon\t🗲\vStruct\1\0\2\ahl\n@type\ticon\t𝓢\15EnumMember\1\0\2\ahl\v@field\ticon\b\tNull\1\0\2\ahl\n@type\ticon\tNULL\bKey\1\0\2\ahl\n@type\ticon\t🔐\vObject\1\0\2\ahl\n@type\ticon\b⦿\nArray\1\0\2\ahl\14@constant\ticon\b\fBoolean\1\0\2\ahl\r@boolean\ticon\b⊨\vNumber\1\0\2\ahl\f@number\ticon\6#\vString\1\0\2\ahl\f@string\ticon\t𝓐\rConstant\1\0\2\ahl\14@constant\ticon\b\rVariable\1\0\2\ahl\14@constant\ticon\b\rFunction\1\0\2\ahl\14@function\ticon\b\14Interface\1\0\2\ahl\n@type\ticon\bﰮ\tEnum\1\0\2\ahl\n@type\ticon\bℰ\16Constructor\1\0\2\ahl\17@constructor\ticon\b\nField\1\0\2\ahl\v@field\ticon\b\rProperty\1\0\2\ahl\f@method\ticon\b\vMethod\1\0\2\ahl\f@method\ticon\aƒ\nClass\1\0\2\ahl\n@type\ticon\t𝓒\fPackage\1\0\2\ahl\15@namespace\ticon\b\14Namespace\1\0\2\ahl\15@namespace\ticon\b\vModule\1\0\2\ahl\15@namespace\ticon\b\tFile\1\0\26\tFile\0\vObject\0\rFunction\0\vStruct\0\14Interface\0\18TypeParameter\0\tEnum\0\nEvent\0\14Component\0\16Constructor\0\15EnumMember\0\nField\0\tNull\0\rProperty\0\bKey\0\vMethod\0\nArray\0\nClass\0\fBoolean\0\fPackage\0\vNumber\0\14Namespace\0\vString\0\vModule\0\rConstant\0\rVariable\0\1\0\2\ahl\14@text.uri\ticon\b\21symbol_blacklist\18lsp_blacklist\fkeymaps\nclose\1\0\f\vunfold\6l\17hover_symbol\14<C-space>\19focus_location\6o\15fold_reset\6R\18goto_location\t<Cr>\15unfold_all\6E\rfold_all\6W\nclose\0\tfold\6h\17code_actions\6a\18rename_symbol\6r\19toggle_preview\6K\1\3\0\0\n<Esc>\6q\17fold_markers\1\3\0\0\b\b\1\0\18\15auto_close\1\19relative_width\2\rposition\nright\18lsp_blacklist\0\16show_guides\2\27highlight_hovered_item\2\17auto_preview\1\22auto_unfold_hover\2\21symbol_blacklist\0\fsymbols\0\fkeymaps\0\17fold_markers\0\nwidth\3\25\twrap\1\25preview_bg_highlight\nPmenu\24show_symbol_details\2\26show_relative_numbers\1\17show_numbers\1\0", "config", "symbols-outline.nvim")
+time([[Config for symbols-outline.nvim]], false)
 -- Config for: trouble.nvim
 time([[Config for trouble.nvim]], true)
 try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
@@ -311,24 +315,20 @@ try_loadstring("\27LJ\2\n?\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K
 time([[Config for nvim-ufo]], false)
 -- Config for: Comment.nvim
 time([[Config for Comment.nvim]], true)
-try_loadstring("\27LJ\2\nS\0\0\3\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0009\0\4\0B\0\1\1K\0\1\0\fcurrent\rlinewise\vtoggle\16Comment.api\frequire�\2\1\0\6\0\r\0\0226\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0003\4\b\0005\5\t\0B\0\5\0016\0\3\0009\0\4\0009\0\5\0'\2\n\0'\3\a\0'\4\v\0005\5\f\0B\0\5\1K\0\1\0\1\0\2\fnoremap\2\vsilent\2R<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>\6v\1\0\2\fnoremap\2\vsilent\2\0\n<C-_>\6n\bset\vkeymap\bvim\nsetup\fComment\frequire\0", "config", "Comment.nvim")
+try_loadstring("\27LJ\2\nS\0\0\3\0\5\0\b6\0\0\0'\2\1\0B\0\2\0029\0\2\0009\0\3\0009\0\4\0B\0\1\1K\0\1\0\fcurrent\rlinewise\vtoggle\16Comment.api\frequire�\2\1\0\6\0\r\0\0226\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\0016\0\3\0009\0\4\0009\0\5\0'\2\6\0'\3\a\0003\4\b\0005\5\t\0B\0\5\0016\0\3\0009\0\4\0009\0\5\0'\2\n\0'\3\a\0'\4\v\0005\5\f\0B\0\5\1K\0\1\0\1\0\2\vsilent\2\fnoremap\2R<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>\6v\1\0\2\vsilent\2\fnoremap\2\0\n<C-_>\6n\bset\vkeymap\bvim\nsetup\fComment\frequire\0", "config", "Comment.nvim")
 time([[Config for Comment.nvim]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
+time([[Config for which-key.nvim]], false)
 -- Config for: tokyonight.nvim
 time([[Config for tokyonight.nvim]], true)
 try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\27colorscheme tokyonight\bcmd\bvim\0", "config", "tokyonight.nvim")
 time([[Config for tokyonight.nvim]], false)
 -- Config for: lsp_signature.nvim
 time([[Config for lsp_signature.nvim]], true)
-try_loadstring("\27LJ\2\nr\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\16hint_prefix\n💡 \20floating_window\1\16hint_enable\2\nsetup\18lsp_signature\frequire\0", "config", "lsp_signature.nvim")
+try_loadstring("\27LJ\2\nr\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\3\20floating_window\1\16hint_enable\2\16hint_prefix\n💡 \nsetup\18lsp_signature\frequire\0", "config", "lsp_signature.nvim")
 time([[Config for lsp_signature.nvim]], false)
--- Config for: symbols-outline.nvim
-time([[Config for symbols-outline.nvim]], true)
-try_loadstring("\27LJ\2\n�\14\0\0\4\0B\0H5\0\0\0005\1\1\0=\1\2\0005\1\4\0005\2\3\0=\2\5\1=\1\6\0004\1\0\0=\1\a\0004\1\0\0=\1\b\0005\1\n\0005\2\t\0=\2\v\0015\2\f\0=\2\r\0015\2\14\0=\2\15\0015\2\16\0=\2\17\0015\2\18\0=\2\19\0015\2\20\0=\2\21\0015\2\22\0=\2\23\0015\2\24\0=\2\25\0015\2\26\0=\2\27\0015\2\28\0=\2\29\0015\2\30\0=\2\31\0015\2 \0=\2!\0015\2\"\0=\2#\0015\2$\0=\2%\0015\2&\0=\2'\0015\2(\0=\2)\0015\2*\0=\2+\0015\2,\0=\2-\0015\2.\0=\2/\0015\0020\0=\0021\0015\0022\0=\0023\0015\0024\0=\0025\0015\0026\0=\0027\0015\0028\0=\0029\0015\2:\0=\2;\0015\2<\0=\2=\1=\1>\0006\1?\0'\3@\0B\1\2\0029\1A\1\18\3\0\0B\1\2\1K\0\1\0\nsetup\20symbols-outline\frequire\fsymbols\14Component\1\0\2\ticon\b\ahl\14@function\18TypeParameter\1\0\2\ticon\t𝙏\ahl\15@parameter\nEvent\1\0\2\ticon\t🗲\ahl\n@type\vStruct\1\0\2\ticon\t𝓢\ahl\n@type\15EnumMember\1\0\2\ticon\b\ahl\v@field\tNull\1\0\2\ticon\tNULL\ahl\n@type\bKey\1\0\2\ticon\t🔐\ahl\n@type\vObject\1\0\2\ticon\b⦿\ahl\n@type\nArray\1\0\2\ticon\b\ahl\14@constant\fBoolean\1\0\2\ticon\b⊨\ahl\r@boolean\vNumber\1\0\2\ticon\6#\ahl\f@number\vString\1\0\2\ticon\t𝓐\ahl\f@string\rConstant\1\0\2\ticon\b\ahl\14@constant\rVariable\1\0\2\ticon\b\ahl\14@constant\rFunction\1\0\2\ticon\b\ahl\14@function\14Interface\1\0\2\ticon\bﰮ\ahl\n@type\tEnum\1\0\2\ticon\bℰ\ahl\n@type\16Constructor\1\0\2\ticon\b\ahl\17@constructor\nField\1\0\2\ticon\b\ahl\v@field\rProperty\1\0\2\ticon\b\ahl\f@method\vMethod\1\0\2\ticon\aƒ\ahl\f@method\nClass\1\0\2\ticon\t𝓒\ahl\n@type\fPackage\1\0\2\ticon\b\ahl\15@namespace\14Namespace\1\0\2\ticon\b\ahl\15@namespace\vModule\1\0\2\ticon\b\ahl\15@namespace\tFile\1\0\26\nEvent\0\vStruct\0\16Constructor\0\vObject\0\15EnumMember\0\nField\0\tNull\0\rProperty\0\bKey\0\14Component\0\vMethod\0\nArray\0\nClass\0\fBoolean\0\fPackage\0\vNumber\0\14Namespace\0\vString\0\vModule\0\rConstant\0\tFile\0\rVariable\0\rFunction\0\14Interface\0\18TypeParameter\0\tEnum\0\1\0\2\ticon\b\ahl\14@text.uri\21symbol_blacklist\18lsp_blacklist\fkeymaps\nclose\1\0\f\nclose\0\tfold\6h\17code_actions\6a\18rename_symbol\6r\15fold_reset\6R\19toggle_preview\6K\17hover_symbol\14<C-space>\19focus_location\6o\18goto_location\t<Cr>\15unfold_all\6E\rfold_all\6W\vunfold\6l\1\3\0\0\n<Esc>\6q\17fold_markers\1\3\0\0\b\b\1\0\18\17auto_preview\1\15auto_close\1\21symbol_blacklist\0\fsymbols\0\fkeymaps\0\17fold_markers\0\22auto_unfold_hover\2\25preview_bg_highlight\nPmenu\24show_symbol_details\2\26show_relative_numbers\1\17show_numbers\1\nwidth\3\25\19relative_width\2\rposition\nright\18lsp_blacklist\0\16show_guides\2\27highlight_hovered_item\2\twrap\1\0", "config", "symbols-outline.nvim")
-time([[Config for symbols-outline.nvim]], false)
--- Config for: which-key.nvim
-time([[Config for which-key.nvim]], true)
-try_loadstring("\27LJ\2\n;\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
-time([[Config for which-key.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-treesitter ]]
@@ -348,6 +348,13 @@ pcall(vim.api.nvim_create_user_command, 'Glow', function(cmdargs)
           require('packer.load')({'glow.nvim'}, {}, _G.packer_plugins)
           return vim.fn.getcompletion('Glow ', 'cmdline')
       end})
+pcall(vim.api.nvim_create_user_command, 'LazyGit', function(cmdargs)
+          require('packer.load')({'lazygit.nvim'}, { cmd = 'LazyGit', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'lazygit.nvim'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('LazyGit ', 'cmdline')
+      end})
 pcall(vim.api.nvim_create_user_command, 'TSPlaygroundToggle', function(cmdargs)
           require('packer.load')({'playground'}, { cmd = 'TSPlaygroundToggle', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
         end,
@@ -362,24 +369,17 @@ pcall(vim.api.nvim_create_user_command, 'TSHighlightCapturesUnderCursor', functi
           require('packer.load')({'playground'}, {}, _G.packer_plugins)
           return vim.fn.getcompletion('TSHighlightCapturesUnderCursor ', 'cmdline')
       end})
-pcall(vim.api.nvim_create_user_command, 'LazyGit', function(cmdargs)
-          require('packer.load')({'lazygit.nvim'}, { cmd = 'LazyGit', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
-        end,
-        {nargs = '*', range = true, bang = true, complete = function()
-          require('packer.load')({'lazygit.nvim'}, {}, _G.packer_plugins)
-          return vim.fn.getcompletion('LazyGit ', 'cmdline')
-      end})
 time([[Defining lazy-load commands]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'autolist.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType tex ++once lua require("packer.load")({'autolist.nvim'}, { ft = "tex" }, _G.packer_plugins)]]
 vim.cmd [[au FileType plaintex ++once lua require("packer.load")({'autolist.nvim'}, { ft = "plaintex" }, _G.packer_plugins)]]
-vim.cmd [[au FileType norg ++once lua require("packer.load")({'autolist.nvim'}, { ft = "norg" }, _G.packer_plugins)]]
 vim.cmd [[au FileType text ++once lua require("packer.load")({'autolist.nvim'}, { ft = "text" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'autolist.nvim'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType norg ++once lua require("packer.load")({'autolist.nvim'}, { ft = "norg" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 

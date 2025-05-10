@@ -16,11 +16,11 @@ return require("packer").startup(function(use)
 
     use({
         "williamboman/mason.nvim",
-        tag = "v1.8.3", -- ✅ 最新 v1 穩定版（或你想要的其他 v1.x.x）
+        tag = "v1.11.0", -- ✅ 最新 v1 穩定版（或你想要的其他 v1.x.x）
     })
     use({
         "williamboman/mason-lspconfig.nvim",
-        tag = "v1.3.0", -- ✅ 第一個支援 setup_handlers 的版本
+        tag = "v1.32.0", -- ✅ 第一個支援 setup_handlers 的版本
         requires = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     })
     use({

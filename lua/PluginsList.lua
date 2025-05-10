@@ -377,6 +377,30 @@ return require("packer").startup(function(use)
     --     end,
     -- })
 
+    use({
+        "folke/noice.nvim",
+        requires = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        },
+        config = function()
+            require("noice").setup({
+                presets = {
+                    command_palette = true, -- 按 : 用浮動輸入列
+                    lsp_doc_border = true,
+                },
+                cmdline = {
+                    view = "cmdline_popup",
+                    format = {
+                        cmdline = { icon = "" },
+                        search_down = { icon = " " },
+                        search_up = { icon = " " },
+                    },
+                },
+            })
+        end,
+    })
+
     if packer_bootstrap then
         require("packer").sync()
     end

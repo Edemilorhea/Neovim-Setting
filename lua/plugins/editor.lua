@@ -306,4 +306,5 @@ return { -- 程式碼折疊 (LazyVim 沒有)
         vim.g.lazygit_floating_window_scaling_factor = 0.9
         vim.g.lazygit_use_neovim_remote = 1
     end
-}}
+},
+}

@@ -1,18 +1,6 @@
 local M = {}
 
--- 快捷鍵註冊 on_attach
-local function on_attach(client, bufnr)
-  local opts = { buffer = bufnr }
-
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "跳轉至定義", buffer = bufnr })
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "顯示提示", buffer = bufnr })
-  vim.keymap.set("n", "ca", vim.lsp.buf.code_action, { desc = "LSP Code Action", buffer = bufnr })
-  vim.keymap.set("n", "<leader>e", function()
-    vim.diagnostic.open_float(nil, { focus = false })
-  end, { desc = "顯示行內診斷訊息", buffer = bufnr })
-end
-
--- 自訂語言伺服器設定（如 omnisharp）
+-- 自訂語言伺服器設定
 local function get_custom_server_config()
   local ok_ext, omnisharp_extended = pcall(require, "omnisharp_extended")
 
@@ -30,11 +18,23 @@ local function get_custom_server_config()
         Sdk = { IncludePrereleases = true },
       },
     },
-    -- 你也可以加入其他如 lua_ls/tsserver 的自訂設定
-    -- lua_ls = { settings = { Lua = {...} } }
   }
 end
 
+-- 綁定 buffer local 的 LSP 功能（非 VSCode）
+local function on_attach(client, bufnr)
+  if vim.g.vscode then
+    return
+  end
+
+  -- 移除 LazyVim 預設快捷鍵
+  for _, key in ipairs({ "gd", "gr", "gI", "gy" }) do
+    pcall(vim.keymap.del, "n", key)
+    pcall(vim.keymap.del, "n", key, { buffer = bufnr })
+  end
+end
+
+-- 註冊所有 LSP server
 local function setup_installed_servers()
   local lspconfig = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
@@ -47,15 +47,45 @@ local function setup_installed_servers()
   end
 end
 
--- 自動啟動 LSP（不在 VSCode 時）
-function M.auto_enable_lsp()
-  if not vim.g.vscode then
-    setup_installed_servers()
-    vim.notify("[LSP] Neovim 啟動：已註冊語言伺服器", vim.log.levels.INFO)
+-- VSCode 全域快捷鍵註冊
+local function setup_lsp_keymaps()
+  if vim.g.vscode then
+    local vscode = require("vscode")
+    vim.keymap.set("n", "gd", function()
+      vscode.call("editor.action.revealDefinition")
+    end, { silent = true })
+    vim.keymap.set("n", "gy", function()
+      vscode.call("editor.action.goToTypeDefinition")
+    end, { silent = true })
+    vim.keymap.set("n", "gi", function()
+      vscode.call("editor.action.goToImplementation")
+    end, { silent = true })
+    vim.keymap.set("n", "gr", function()
+      vscode.call("editor.action.goToReferences")
+    end, { silent = true })
+  else
+    local map = vim.keymap.set
+    local opts = { silent = true }
+
+    map("n", "gd", function()
+      Snacks.picker.lsp_definitions()
+    end, vim.tbl_extend("force", opts, { desc = "Goto Definition", has = "Definition" }))
+
+    map("n", "gr", function()
+      Snacks.picker.lsp_references()
+    end, vim.tbl_extend("force", opts, { nowait = true, desc = "references" }))
+
+    map("n", "gI", function()
+      Snacks.picker.lsp_implementations()
+    end, vim.tbl_extend("force", opts, { desc = "Goto Implementation" }))
+
+    map("n", "gy", function()
+      Snacks.picker.lsp_type_definitions()
+    end, vim.tbl_extend("force", opts, { desc = "Goto T[y]pe Definition" }))
   end
 end
 
--- 手動切換 LSP：供 VSCode 下使用
+-- 可呼叫的開關函式
 function M.toggle_lsp()
   local clients = vim.lsp.get_clients()
   if #clients > 0 then
@@ -68,14 +98,21 @@ function M.toggle_lsp()
     vim.cmd("LspStart")
     vim.notify("[LSP] 已註冊並啟動所有已安裝的語言伺服器")
   end
+
+  if vim.g.vscode then
+    setup_lsp_keymaps()
+  end
 end
 
--- VSCode 使用：手動註冊
-vim.api.nvim_create_user_command("MasonToggle", function()
-  require("plugin.lsp").toggle_lsp()
-end, {})
+-- 自動啟用（非 VSCode）
+function M.auto_enable_lsp()
+  if not vim.g.vscode then
+    setup_installed_servers()
+    vim.notify("[LSP] Neovim 啟動：已註冊語言伺服器", vim.log.levels.INFO)
+  end
+end
 
--- 常用操作封裝
+-- 附加功能
 function M.clear_references()
   if not vim.g.vscode and vim.lsp.buf.clear_references then
     vim.lsp.buf.clear_references()
@@ -105,5 +142,10 @@ function M.code_action()
     vim.lsp.buf.code_action()
   end
 end
+
+-- 註冊 MasonToggle 指令
+vim.api.nvim_create_user_command("MasonToggle", function()
+  require("plugin.lsp").toggle_lsp()
+end, {})
 
 return M

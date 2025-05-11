@@ -5,8 +5,6 @@ if vim.g.vscode then
   vim.notify = print
 
   -- 修補 LSP 清除引用以避免報錯
-  vim.lsp = vim.lsp or {}
-  vim.lsp.buf = vim.lsp.buf or {}
   vim.lsp.buf.clear_references = function() end
   require("plugin.lsp")
   print("這是在 VSCode 中顯示的訊息")

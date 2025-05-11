@@ -6,7 +6,21 @@ return {
     dependencies = {
       { "Hoffs/omnisharp-extended-lsp.nvim", vscode = true },
     },
-    opts = {},
+    opts = {
+      ensure_installed = {
+        "lua_ls",
+        "jsonls",
+        "ts_ls",
+        "html",
+        "cssls",
+        "volar",
+        "emmet_ls",
+        "eslint",
+        "omnisharp",
+        "pyright",
+        "marksman",
+      },
+    },
   },
   {
     "williamboman/mason.nvim",

@@ -159,13 +159,16 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
     end,
   }, -- 修改 Telescope 設定 (LazyVim 有但要修改)
   {
+    "nvim-lua/plenary.nvim",
+    lazy = false, -- ✅ 立即加載，確保任何時候都能用
+    vscode = true, -- ✅ 明確指定在 VSCode 中也會載入
+  },
+  {
     "nvim-telescope/telescope.nvim",
-    enabled = not vim.g.vscode, -- 在 VSCode 中禁用
-    cmd = "Telescope",
-    version = false, -- 使用最新版本
-    lazy = false, -- 立即加載避免命令延遲問題
+    vscode = true,
+    version = false,
+    lazy = false, -- 立即加載以避免命令延遲問題
     dependencies = {
-      "nvim-lua/plenary.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
@@ -195,7 +198,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
     keys = {
       { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files" },
       { "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Live Grep" },
-      { "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
+      { "fb", "Telescope buffers", desc = "Buffers" },
       { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help Tags" },
     },
   },

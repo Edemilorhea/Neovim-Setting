@@ -12,10 +12,10 @@ function M.setup()
   vim.keymap.set("i", "<S-Tab>", "<C-d>", opts)
   vim.keymap.set("v", "p", '"_dP', opts)
 
-  -- 僅 Neovim 使用 NvimTreeToggle
-  if not vim.g.vscode then
-    vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", opts)
-  end
+  -- -- 僅 Neovim 使用 NvimTreeToggle
+  -- if not vim.g.vscode then
+  --   vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", opts)
+  -- end
 
   local function reload_lazyvim()
     local ok, reload = pcall(require, "lazy.core.reload")

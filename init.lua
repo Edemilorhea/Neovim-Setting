@@ -12,7 +12,7 @@ if vim.g.vscode then
   print("這是在 VSCode 中顯示的訊息")
 else
   -- 非 VSCode 才載入 LSP 設定與快捷鍵
-  require("plugin.lsp").auto_enable_lsp() -- ← 請替換為你的 LSP 配置檔路徑
+  require("plugin.lsp").auto_enable_lsp()
   require("config.keymaps")
   vim.notify("這是 Neovim 的 notify")
 end

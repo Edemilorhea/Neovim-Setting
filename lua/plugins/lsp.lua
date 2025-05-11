@@ -10,6 +10,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    version = "^1.0.0",
     cmd = { "Mason", "MasonInstall", "MasonLog" },
     build = ":MasonUpdate",
     vscode = true,
@@ -18,6 +19,7 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    version = "^1.0.0",
     lazy = true, -- 確保 VSCode 中也能註冊 command
     event = "VeryLazy",
     vscode = true,

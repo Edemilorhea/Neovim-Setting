@@ -8,35 +8,37 @@ require("keymap.general").setup()
 
 require("keymap.hotKeyMaps").setup()
 
--- 移除原始的終端映射
-vim.keymap.del("n", "<C-/>")
-vim.keymap.del("n", "<C-_>") -- 也移除 Ctrl+_ 映射
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  callback = function()
+    -- 安全地移除 LazyVim 綁定
+    pcall(vim.keymap.del, "n", "<C-/>")
+    pcall(vim.keymap.del, "v", "<C-/>")
 
--- 添加註釋功能映射
-if vim.g.vscode then
-  require("keymap.vscode").setup()
+    -- 加入你自己的註解綁定
+    if not vim.g.vscode then
+      local toggle_comment = function(start_line, end_line)
+        require("mini.comment").toggle_lines(start_line, end_line)
+      end
 
-  -- VSCode 環境下不需要配置
-else
-  -- 使用 mini.comment
-  vim.keymap.set("n", "<C-/>", function()
-    require("mini.comment").toggle_lines(vim.fn.line("."), vim.fn.line("."))
-  end, { desc = "Comment toggle current line" })
+      vim.keymap.set("n", "<C-/>", function()
+        toggle_comment(vim.fn.line("."), vim.fn.line("."))
+      end, { desc = "Toggle comment (current line)" })
 
-  vim.keymap.set("v", "<C-/>", function()
-    local start_line = vim.fn.line("'<")
-    local end_line = vim.fn.line("'>")
-    require("mini.comment").toggle_lines(start_line, end_line)
-  end, { desc = "Comment toggle visual selection" })
+      vim.keymap.set("v", "<C-/>", function()
+        toggle_comment(vim.fn.line("'<"), vim.fn.line("'>"))
+      end, { desc = "Toggle comment (visual selection)" })
 
-  -- 同樣設置 Ctrl+_ 以確保兼容性
-  vim.keymap.set("n", "<C-_>", function()
-    require("mini.comment").toggle_lines(vim.fn.line("."), vim.fn.line("."))
-  end, { desc = "Comment toggle current line" })
+      -- Ctrl-_ 作為兼容鍵
+      vim.keymap.set("n", "<C-_>", function()
+        toggle_comment(vim.fn.line("."), vim.fn.line("."))
+      end, { desc = "Toggle comment (current line)" })
 
-  vim.keymap.set("v", "<C-_>", function()
-    local start_line = vim.fn.line("'<")
-    local end_line = vim.fn.line("'>")
-    require("mini.comment").toggle_lines(start_line, end_line)
-  end, { desc = "Comment toggle visual selection" })
-end
+      vim.keymap.set("v", "<C-_>", function()
+        toggle_comment(vim.fn.line("'<"), vim.fn.line("'>"))
+      end, { desc = "Toggle comment (visual selection)" })
+    else
+      require("keymap.vscode").setup()
+    end
+  end,
+})

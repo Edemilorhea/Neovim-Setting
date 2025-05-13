@@ -1,8 +1,11 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    vscode = true,
+    vscode = false,
     lazy = true,
+    cond = function()
+      return not vim.g.vscode
+    end,
     opts = function()
       local Keys = require("lazyvim.plugins.lsp.keymaps").get()
     -- stylua: ignore
@@ -21,8 +24,11 @@ return {
     version = "^1.0.0",
     cmd = { "Mason", "MasonInstall", "MasonLog" },
     build = ":MasonUpdate",
-    vscode = true,
+    vscode = false,
     lazy = true,
+    cond = function()
+      return not vim.g.vscode
+    end,
     opts = {},
   },
   {
@@ -30,7 +36,10 @@ return {
     version = "^1.0.0",
     lazy = true,
     event = "VeryLazy",
-    vscode = true,
+    vscode = false,
+    cond = function()
+      return not vim.g.vscode
+    end,
     opts = {
       ensure_installed = {
         "lua_ls",

@@ -124,20 +124,6 @@ return { -- 程式碼折疊 (LazyVim 沒有)
     end,
   }, -- 輸入法切換 (LazyVim 沒有)
   {
-    "keaising/im-select.nvim",
-    lazy = true,
-    event = "InsertEnter",
-    config = function()
-      if vim.g.vscode then
-        return
-      end
-
-      require("im_select").setup({
-        -- 您的設定...
-      })
-    end,
-  },
-  {
     "echasnovski/mini.comment",
     event = "VeryLazy",
     opts = {
@@ -256,7 +242,7 @@ return { -- 程式碼折疊 (LazyVim 沒有)
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = vim.g.vscode, -- 在 VSCode 中懶加載
-    vscode = true,
+    vscode = false,
     build = ":TSUpdate",
     config = function()
       if vim.g.vscode then
@@ -329,6 +315,17 @@ return { -- 程式碼折疊 (LazyVim 沒有)
       vim.g.lazygit_floating_window_winblend = 0
       vim.g.lazygit_floating_window_scaling_factor = 0.9
       vim.g.lazygit_use_neovim_remote = 1
+    end,
+  },
+  {
+    "kylechui/nvim-surround",
+    version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    vscode = true,
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
     end,
   },
 }

@@ -26,6 +26,20 @@ function M.setup()
         { key = "zk", command = "editor.gotoPreviousFold" }
     }
 
+    local vscode = require("vscode")
+    vim.keymap.set("n", "gd", function()
+      vscode.call("editor.action.revealDefinition")
+    end, { silent = true })
+    vim.keymap.set("n", "gy", function()
+      vscode.call("editor.action.goToTypeDefinition")
+    end, { silent = true })
+    vim.keymap.set("n", "gi", function()
+      vscode.call("editor.action.goToImplementation")
+    end, { silent = true })
+    vim.keymap.set("n", "gr", function()
+      vscode.call("editor.action.goToReferences")
+    end, { silent = true })
+
     for _, map in ipairs(fold_mappings) do
         vim.keymap.set("n", map.key, [[<Cmd>call VSCodeNotify("]] .. map.command .. [[")<CR>]], opts)
     end

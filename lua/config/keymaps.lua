@@ -8,6 +8,11 @@ require("keymap.general").setup()
 
 require("keymap.hotKeyMaps").setup()
 
+
+if vim.g.vscode then
+  require("keymap.vscode").setup()
+end
+
 vim.api.nvim_create_autocmd("User", {
   pattern = "VeryLazy",
   callback = function()
@@ -37,8 +42,6 @@ vim.api.nvim_create_autocmd("User", {
       vim.keymap.set("v", "<C-_>", function()
         toggle_comment(vim.fn.line("'<"), vim.fn.line("'>"))
       end, { desc = "Toggle comment (visual selection)" })
-    else
-      require("keymap.vscode").setup()
     end
   end,
 })

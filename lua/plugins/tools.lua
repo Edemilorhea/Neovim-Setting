@@ -18,13 +18,9 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
     "epwalsh/obsidian.nvim",
     version = "*", -- 使用最新穩定版本
     lazy = true,
-    ft = "markdown", -- 只在 markdown 文件中加載
-    dependencies = { "nvim-lua/plenary.nvim" },
-    keys = {
-      -- 可以添加全局快捷鍵
-      -- { "<leader>on", "<cmd>ObsidianNew<CR>", desc = "新建 Obsidian 筆記" },
-      -- { "<leader>ot", "<cmd>ObsidianToday<CR>", desc = "今日筆記" },
-    },
+    ft = "markdown", -- markdown 檔才會觸發
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" },
     config = function()
       if vim.g.vscode then
         return
@@ -39,22 +35,23 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
         workspaces = {
           {
             name = "personal",
-            path = home .. "\\Documents\\Obsidian Vault",
+            path = home .. "/Documents/Obsidian Vault", -- ✅ 改為正確斜線
           },
         },
 
         notes_subdir = "notes",
 
         daily_notes = {
-          folder = "notes\\dailies",
+          folder = "notes/dailies", -- ✅ 改為正確斜線
           date_format = "%Y-%m-%d",
           alias_format = "%B %-d, %Y",
           default_tags = { "daily-notes" },
           template = nil,
         },
 
+        -- ✅ 安全地檢查 cmp 是否存在
         completion = {
-          nvim_cmp = true,
+          nvim_cmp = pcall(require, "cmp"),
           min_chars = 2,
         },
 
@@ -122,26 +119,11 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
         ui = {
           enable = true,
           checkboxes = {
-            [" "] = {
-              char = "☐",
-              hl_group = "ObsidianTodo",
-            },
-            ["x"] = {
-              char = "☑",
-              hl_group = "ObsidianDone",
-            },
-            [">"] = {
-              char = "➤",
-              hl_group = "ObsidianRightArrow",
-            },
-            ["~"] = {
-              char = "∼",
-              hl_group = "ObsidianTilde",
-            },
-            ["!"] = {
-              char = "!",
-              hl_group = "ObsidianImportant",
-            },
+            [" "] = { char = "☐", hl_group = "ObsidianTodo" },
+            ["x"] = { char = "☑", hl_group = "ObsidianDone" },
+            [">"] = { char = "➤", hl_group = "ObsidianRightArrow" },
+            ["~"] = { char = "∼", hl_group = "ObsidianTilde" },
+            ["!"] = { char = "!", hl_group = "ObsidianImportant" },
           },
           bullets = {
             char = "•",
@@ -150,14 +132,15 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
         },
 
         attachments = {
-          img_folder = "assets\\imgs",
+          img_folder = "assets/imgs", -- ✅ 改為正確斜線
           img_name_func = function()
             return string.format("%s-", os.time())
           end,
         },
       })
     end,
-  }, -- 修改 Telescope 設定 (LazyVim 有但要修改)
+  },
+  -- 修改 Telescope 設定 (LazyVim 有但要修改)
   {
     "nvim-lua/plenary.nvim",
     lazy = false, -- ✅ 立即加載，確保任何時候都能用

@@ -42,6 +42,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
         notes_subdir = "notes",
 
         daily_notes = {
+          default = {},
           folder = "notes/dailies", -- ✅ 改為正確斜線
           date_format = "%Y-%m-%d",
           alias_format = "%B %-d, %Y",
@@ -51,11 +52,13 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
 
         -- ✅ 安全地檢查 cmp 是否存在
         completion = {
+          default = {},
           nvim_cmp = pcall(require, "cmp"),
           min_chars = 2,
         },
 
         mappings = {
+          default = {},
           ["gf"] = {
             action = function()
               return require("obsidian").util.gf_passthrough()
@@ -110,31 +113,34 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
           date_format = "%Y-%m-%d",
           time_format = "%H:%M",
           substitutions = {
-            date = os.date("%Y-%m-%d"),
-            time = os.date("%H:%M"),
+            date = "%Y-%m-%d",
+            time = "%H:%M",
             user = os.getenv("USERNAME") or "TC",
           },
+          default = {},
         },
 
-        ui = {
-          enable = true,
-          checkboxes = {
-            [" "] = { char = "☐", hl_group = "ObsidianTodo" },
-            ["x"] = { char = "☑", hl_group = "ObsidianDone" },
-            [">"] = { char = "➤", hl_group = "ObsidianRightArrow" },
-            ["~"] = { char = "∼", hl_group = "ObsidianTilde" },
-            ["!"] = { char = "!", hl_group = "ObsidianImportant" },
-          },
-          bullets = {
-            char = "•",
-            hl_group = "ObsidianBullet",
-          },
-        },
+        --  ui = {
+        --    enable = false,
+        --    checkboxes = {
+        --      [" "] = { char = "☐", hl_group = "ObsidianTodo" },
+        --      ["x"] = { char = "☑", hl_group = "ObsidianDone" },
+        --      [">"] = { char = "➤", hl_group = "ObsidianRightArrow" },
+        --      ["~"] = { char = "∼", hl_group = "ObsidianTilde" },
+        --      ["!"] = { char = "!", hl_group = "ObsidianImportant" },
+        --    },
+        --    bullets = {
+        --      char = "•",
+        --      hl_group = "ObsidianBullet",
+        --    },
+        --  },
 
         attachments = {
-          img_folder = "assets/imgs", -- ✅ 改為正確斜線
-          img_name_func = function()
-            return string.format("%s-", os.time())
+          img_folder = "assets/imgs", -- 你自己的圖片存放資料夾
+          default = {},
+          confirm_img_paste = true, -- 貼上圖片前是否提示
+          img_text_func = function(client, path)
+            return string.format("![%s](%s)", path.name, path.url)
           end,
         },
       })

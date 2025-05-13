@@ -64,65 +64,50 @@ return { -- 程式碼折疊 (LazyVim 沒有)
     lazy = true,
     ft = { "markdown", "text", "tex", "plaintex", "norg" },
     config = function()
-      if vim.g.vscode then
+      local autolist_basic_enabled = true
+      local autolist_blink_integration = false
+
+      if vim.g.vscode or not autolist_basic_enabled then
         return
       end
 
-      require("autolist").setup({})
+      vim.g.autolist_blink_integration = autolist_blink_integration
 
-      -- 縮排按鍵設定
-      vim.keymap.set("i", "<Tab>", "<Cmd>AutolistTab<CR>", {
-        desc = "Autolist Indent",
-      })
-      vim.keymap.set("i", "<S-Tab>", "<Cmd>AutolistShiftTab<CR>", {
-        desc = "Autolist Dedent",
-      })
-      vim.keymap.set("n", "<C-r>", "<Cmd>AutolistRecalculate<CR>", {
-        desc = "Autolist Recalculate",
-      })
-      vim.keymap.set("n", "<CR>", "<Cmd>AutolistToggleCheckbox<CR><CR>", {
-        desc = "Autolist Toggle Checkbox",
-      })
+      local autolist = require("autolist")
+      autolist.setup()
 
-      -- 循環切換清單類型
-      vim.keymap.set("n", "<leader>cn", require("autolist").cycle_next_dr, {
-        expr = true,
-        desc = "Autolist Cycle Next",
-      })
-      vim.keymap.set("n", "<leader>cp", require("autolist").cycle_prev_dr, {
-        expr = true,
-        desc = "Autolist Cycle Prev",
-      })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "markdown", "text", "tex", "plaintex", "norg" },
+        callback = function()
+          local map = function(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = true, desc = desc })
+          end
 
-      -- 編輯操作後自動重新計算
-      vim.keymap.set("n", ">>", ">><Cmd>AutolistRecalculate<CR>", {
-        desc = "Indent + Autolist Recalc",
-      })
-      vim.keymap.set("n", "<<", "<<<Cmd>AutolistRecalculate<CR>", {
-        desc = "Dedent + Autolist Recalc",
-      })
+          map("i", "<Tab>", "<Cmd>AutolistTab<CR>", "Autolist Indent")
+          map("i", "<S-Tab>", "<Cmd>AutolistShiftTab<CR>", "Autolist Dedent")
 
-      -- 刪除行與重新計算
-      vim.keymap.set("n", "dd", function()
-        vim.cmd('normal! "_dd')
-        vim.cmd("AutolistRecalculate")
-      end, {
-        desc = "Delete Line + Autolist Recalc",
-      })
+          -- 添加此映射以在輸入模式下自動延續列表
+          map("i", "<CR>", "<CR><Cmd>AutolistNewBullet<CR>", "Auto continue list")
 
-      -- 視覺模式操作
-      vim.keymap.set("v", "d", function()
-        vim.cmd('normal! "_d')
-        vim.cmd("AutolistRecalculate")
-      end, {
-        desc = "Delete Visual + Autolist Recalc",
-      })
-
-      vim.keymap.set("v", "p", "p<Cmd>AutolistRecalculate<CR>", {
-        desc = "Paste Visual + Autolist Recalc",
+          map("n", "<CR>", "<Cmd>AutolistToggleCheckbox<CR><CR>", "Toggle checkbox")
+          map("n", "<C-r>", "<Cmd>AutolistRecalculate<CR>", "Recalculate list")
+          map("n", "cn", autolist.cycle_next_dr, "cycle next list type")
+          map("n", "cp", autolist.cycle_prev_dr, "cycle prev list type")
+          map("n", ">>", ">>AutolistRecalculate", "Indent and recalc")
+          map("n", "<<", "<<<Cmd>AutolistRecalculate<CR>", "Dedent and recalc")
+          map("n", "dd", function()
+            vim.cmd('normal! "_dd')
+            vim.cmd("AutolistRecalculate")
+          end, "Delete line and recalc")
+          map("v", "d", function()
+            vim.cmd('normal! "_d')
+            vim.cmd("AutolistRecalculate")
+          end, "Visual delete and recalc")
+          map("v", "p", "pAutolistRecalculate", "Paste and recalc")
+        end,
       })
     end,
-  }, -- 輸入法切換 (LazyVim 沒有)
+  },
   {
     "echasnovski/mini.comment",
     event = "VeryLazy",

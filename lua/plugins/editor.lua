@@ -83,8 +83,8 @@ return { -- 程式碼折疊 (LazyVim 沒有)
             vim.keymap.set(mode, lhs, rhs, { buffer = true, desc = desc })
           end
 
-          map("i", "<Tab>", "<Cmd>AutolistTab<CR>", "Autolist Indent")
-          map("i", "<S-Tab>", "<Cmd>AutolistShiftTab<CR>", "Autolist Dedent")
+          -- map("i", "<Tab>", "<Cmd>AutolistTab<CR>", "Autolist Indent")
+          -- map("i", "<S-Tab>", "<Cmd>AutolistShiftTab<CR>", "Autolist Dedent")
 
           -- 添加此映射以在輸入模式下自動延續列表
           map("i", "<CR>", "<CR><Cmd>AutolistNewBullet<CR>", "Auto continue list")
@@ -93,7 +93,7 @@ return { -- 程式碼折疊 (LazyVim 沒有)
           map("n", "<C-r>", "<Cmd>AutolistRecalculate<CR>", "Recalculate list")
           map("n", "cn", autolist.cycle_next_dr, "cycle next list type")
           map("n", "cp", autolist.cycle_prev_dr, "cycle prev list type")
-          map("n", ">>", ">>AutolistRecalculate", "Indent and recalc")
+          map("n", ">>", ">><Cmd>AutolistRecalculate<CR>", "Indent and recalc")
           map("n", "<<", "<<<Cmd>AutolistRecalculate<CR>", "Dedent and recalc")
           map("n", "dd", function()
             vim.cmd('normal! "_dd')
@@ -112,59 +112,22 @@ return { -- 程式碼折疊 (LazyVim 沒有)
     "echasnovski/mini.comment",
     event = "VeryLazy",
     opts = {
-      -- 保留任何您想修改的原始設定
-      -- options = { ... }
+      -- 使用原生映射方式
+      mappings = {
+        -- 這將映射gcc和gc
+        comment = "gc",
+        -- 這會映射gcc
+        comment_line = "gcc",
+        -- 這會在visual模式下映射gc
+        comment_visual = "gc",
+        textobject = "gc",
+      },
     },
     config = function(_, opts)
       if vim.g.vscode then
         return
       end
-
-      -- 先正常設定 mini.comment
       require("mini.comment").setup(opts)
-
-      -- 設定 Ctrl+/ 和 Ctrl+_ 快捷鍵
-
-      -- Normal 模式：註釋當前行
-      vim.keymap.set("n", "<C-/>", function()
-        require("mini.comment").toggle_lines(vim.fn.line("."), vim.fn.line("."))
-      end, {
-        noremap = true,
-        silent = true,
-        desc = "Comment toggle current line",
-      })
-
-      vim.keymap.set("n", "<C-_>", function()
-        require("mini.comment").toggle_lines(vim.fn.line("."), vim.fn.line("."))
-      end, {
-        noremap = true,
-        silent = true,
-        desc = "Comment toggle current line (C-_)",
-      })
-
-      -- Visual 模式：註釋選中行
-      vim.keymap.set("v", "<C-/>", function()
-        local start_line = vim.fn.line("'<")
-        local end_line = vim.fn.line("'>")
-        require("mini.comment").toggle_lines(start_line, end_line)
-      end, {
-        noremap = true,
-        silent = true,
-        desc = "Comment toggle visual lines",
-      })
-
-      vim.keymap.set("v", "<C-_>", function()
-        local start_line = vim.fn.line("'<")
-        local end_line = vim.fn.line("'>")
-        require("mini.comment").toggle_lines(start_line, end_line)
-      end, {
-        noremap = true,
-        silent = true,
-        desc = "Comment toggle visual lines (C-_)",
-      })
-
-      -- 打印設定完成訊息
-      print("mini.comment keymaps setup complete")
     end,
   },
   {

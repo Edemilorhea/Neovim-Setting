@@ -8,7 +8,6 @@ require("keymap.general").setup()
 
 require("keymap.hotKeyMaps").setup()
 
-
 if vim.g.vscode then
   require("keymap.vscode").setup()
 end
@@ -18,30 +17,12 @@ vim.api.nvim_create_autocmd("User", {
   callback = function()
     -- 安全地移除 LazyVim 綁定
     pcall(vim.keymap.del, "n", "<C-/>")
-    pcall(vim.keymap.del, "v", "<C-/>")
-
-    -- 加入你自己的註解綁定
-    if not vim.g.vscode then
-      local toggle_comment = function(start_line, end_line)
-        require("mini.comment").toggle_lines(start_line, end_line)
-      end
-
-      vim.keymap.set("n", "<C-/>", function()
-        toggle_comment(vim.fn.line("."), vim.fn.line("."))
-      end, { desc = "Toggle comment (current line)" })
-
-      vim.keymap.set("v", "<C-/>", function()
-        toggle_comment(vim.fn.line("'<"), vim.fn.line("'>"))
-      end, { desc = "Toggle comment (visual selection)" })
-
-      -- Ctrl-_ 作為兼容鍵
-      vim.keymap.set("n", "<C-_>", function()
-        toggle_comment(vim.fn.line("."), vim.fn.line("."))
-      end, { desc = "Toggle comment (current line)" })
-
-      vim.keymap.set("v", "<C-_>", function()
-        toggle_comment(vim.fn.line("'<"), vim.fn.line("'>"))
-      end, { desc = "Toggle comment (visual selection)" })
-    end
+    pcall(vim.keymap.del, "t", "<C-/>")
+    pcall(vim.keymap.del, "n", "<C-_>")
+    pcall(vim.keymap.del, "t", "<C-_>")
+    vim.keymap.set("n", "<C-/>", "gcc", { remap = true, desc = "Comment line" })
+    vim.keymap.set("n", "<C-_>", "gcc", { remap = true, desc = "Comment line" })
+    vim.keymap.set("v", "<C-/>", "gc", { remap = true, desc = "Comment selection" })
+    vim.keymap.set("v", "<C-_>", "gc", { remap = true, desc = "Comment selection" })
   end,
 })

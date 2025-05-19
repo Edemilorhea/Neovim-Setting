@@ -242,7 +242,7 @@ return { -- 程式碼折疊 (LazyVim 沒有)
   {
     "nvim-treesitter/playground",
     lazy = true,
-    vscode = true,
+    vscode = false,
     cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
   },
   {

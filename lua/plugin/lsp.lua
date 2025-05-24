@@ -18,6 +18,29 @@ local function get_custom_server_config()
         Sdk = { IncludePrereleases = true },
       },
     },
+
+    -- 新增 marksman 設定
+    marksman = {
+      root_dir = require("lspconfig.util").root_pattern(
+        ".obsidian",
+        ".markdownlintrc",
+        ".git",
+        ".markdownlint.json",
+        ".markdownlint.yaml"
+      ),
+      settings = {
+        markdownlint = {
+          config = {
+            MD013 = {
+              line_length = 120,
+              code_block_line_length = 120,
+              tables = false,
+            },
+          },
+        },
+      },
+      filetypes = { "markdown" },
+    },
   }
 end
 

@@ -52,6 +52,7 @@ return {
         "eslint",
         "omnisharp",
         "pyright",
+        "marksman",
       },
     },
   },

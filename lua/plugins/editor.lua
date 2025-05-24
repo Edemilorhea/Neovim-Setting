@@ -62,16 +62,11 @@ return { -- 程式碼折疊 (LazyVim 沒有)
   {
     "gaoDean/autolist.nvim",
     lazy = true,
+    version = false,
     ft = { "markdown", "text", "tex", "plaintex", "norg" },
     config = function()
-      local autolist_basic_enabled = true
-      local autolist_blink_integration = false
-
-      if vim.g.vscode or not autolist_basic_enabled then
-        return
-      end
-
-      vim.g.autolist_blink_integration = autolist_blink_integration
+      -- local autolist_blink_integration = false
+      -- vim.g.autolist_blink_integration = autolist_blink_integration
 
       local autolist = require("autolist")
       autolist.setup()
@@ -82,9 +77,6 @@ return { -- 程式碼折疊 (LazyVim 沒有)
           local map = function(mode, lhs, rhs, desc)
             vim.keymap.set(mode, lhs, rhs, { buffer = true, desc = desc })
           end
-
-          -- map("i", "<Tab>", "<Cmd>AutolistTab<CR>", "Autolist Indent")
-          -- map("i", "<S-Tab>", "<Cmd>AutolistShiftTab<CR>", "Autolist Dedent")
 
           -- 添加此映射以在輸入模式下自動延續列表
           map("i", "<CR>", "<CR><Cmd>AutolistNewBullet<CR>", "Auto continue list")
@@ -99,10 +91,6 @@ return { -- 程式碼折疊 (LazyVim 沒有)
             vim.cmd('normal! "_dd')
             vim.cmd("AutolistRecalculate")
           end, "Delete line and recalc")
-          map("v", "d", function()
-            vim.cmd('normal! "_d')
-            vim.cmd("AutolistRecalculate")
-          end, "Visual delete and recalc")
           map("v", "p", "pAutolistRecalculate", "Paste and recalc")
         end,
       })

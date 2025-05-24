@@ -1,5 +1,9 @@
 return { -- Peek Markdown 預覽 (LazyVim 沒有)
   {
+    "inkarkat/vim-visualrepeat",
+    event = "VeryLazy", -- 或你喜歡的啟動條件
+  },
+  {
     "toppair/peek.nvim",
     lazy = true,
     build = "deno task --quiet build:fast",
@@ -18,14 +22,11 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
     "epwalsh/obsidian.nvim",
     version = "*", -- 使用最新穩定版本
     lazy = true,
+    vsocde = false,
     ft = "markdown", -- markdown 檔才會觸發
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim", "hrsh7th/nvim-cmp" },
     config = function()
-      if vim.g.vscode then
-        return
-      end
-
       local home = vim.fn.expand("~")
 
       -- 設定 conceallevel
@@ -38,7 +39,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
             path = home .. "/Documents/Obsidian Vault", -- ✅ 改為正確斜線
           },
         },
-
+        ui = { enable = false },
         notes_subdir = "notes",
 
         daily_notes = {
@@ -120,21 +121,6 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
           default = {},
         },
 
-        --  ui = {
-        --    enable = false,
-        --    checkboxes = {
-        --      [" "] = { char = "☐", hl_group = "ObsidianTodo" },
-        --      ["x"] = { char = "☑", hl_group = "ObsidianDone" },
-        --      [">"] = { char = "➤", hl_group = "ObsidianRightArrow" },
-        --      ["~"] = { char = "∼", hl_group = "ObsidianTilde" },
-        --      ["!"] = { char = "!", hl_group = "ObsidianImportant" },
-        --    },
-        --    bullets = {
-        --      char = "•",
-        --      hl_group = "ObsidianBullet",
-        --    },
-        --  },
-
         attachments = {
           img_folder = "assets/imgs", -- 你自己的圖片存放資料夾
           default = {},
@@ -154,7 +140,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
   },
   {
     "nvim-telescope/telescope.nvim",
-    vscode = true,
+    vscode = false,
     version = false,
     lazy = false, -- 立即加載以避免命令延遲問題
     dependencies = {

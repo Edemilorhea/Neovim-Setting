@@ -287,4 +287,17 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
             { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help Tags" },
         },
     },
+    {
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+            default = {
+                embed_image_as_base64 = false,
+                prompt_for_file_name = true,
+                drag_and_drop = {
+                    insert_mode = true,
+                },
+            },
+        },
+    },
 }

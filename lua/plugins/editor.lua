@@ -80,7 +80,6 @@ return { -- 程式碼折疊 (LazyVim 沒有)
 
                     -- 添加此映射以在輸入模式下自動延續列表
                     map("i", "<CR>", "<CR><Cmd>AutolistNewBullet<CR>", "Auto continue list")
-
                     map("n", "<CR>", "<Cmd>AutolistToggleCheckbox<CR><CR>", "Toggle checkbox")
                     map("n", "<C-r>", "<Cmd>AutolistRecalculate<CR>", "Recalculate list")
                     map("n", "cn", autolist.cycle_next_dr, "cycle next list type")

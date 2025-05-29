@@ -76,7 +76,7 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
             bullet = {
                 enabled = true,
                 icons = { "◉", "○", "✸", "✿" }, -- 層次感更強的圖標
-                ordered_icons = { "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨" }, -- 數字圓圈
+                -- ordered_icons = { "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨" }, -- 數字圓圈
                 left_pad = 0,
                 right_pad = 1,
                 highlight = "RenderMarkdownBullet",

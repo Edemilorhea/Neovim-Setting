@@ -43,7 +43,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
             workspaces = {
                 {
                     name = "main",
-                    path = vim.fn.expand("~/Documents/Obsidian Vault"), -- 使用 ~ 自動展開用戶目錄
+                    path = vim.fn.expand("~/Documents/Obsidian_Note"), -- 使用 ~ 自動展開用戶目錄
                 },
                 -- 如果有多個筆記庫可以添加更多
                 -- {

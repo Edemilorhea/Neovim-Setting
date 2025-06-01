@@ -4,6 +4,14 @@ local g = vim.g
 local bo = vim.bo
 local wo = vim.wo
 
+vim.g.markdown_fenced_languages = {
+    "csharp=cs",
+    "cs",
+    "python",
+    "javascript",
+    "bash=sh",
+}
+
 g.mapleader = "\\"
 g.maplocalleader = "\\"
 
@@ -27,21 +35,21 @@ opt.langmenu = "zh_TW.UTF-8"
 opt.termguicolors = true
 
 if not g.vscode then
-  opt.foldmethod = "expr"
-  opt.foldexpr = "nvim_treesitter#foldexpr()"
-  opt.foldenable = true
-  opt.foldlevel = 99
-  opt.foldlevelstart = 99
-  opt.foldcolumn = "1"
+    opt.foldmethod = "expr"
+    opt.foldexpr = "nvim_treesitter#foldexpr()"
+    opt.foldenable = true
+    opt.foldlevel = 99
+    opt.foldlevelstart = 99
+    opt.foldcolumn = "1"
 end
 
 -- 確保所有檔案類型都使用 4 格縮排
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  callback = function()
-    vim.bo.tabstop = 4
-    vim.bo.shiftwidth = 4
-    vim.bo.softtabstop = 4
-    vim.bo.expandtab = true
-  end,
+    pattern = "*",
+    callback = function()
+        vim.bo.tabstop = 4
+        vim.bo.shiftwidth = 4
+        vim.bo.softtabstop = 4
+        vim.bo.expandtab = true
+    end,
 })

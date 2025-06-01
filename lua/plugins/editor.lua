@@ -223,6 +223,12 @@ return { -- 程式碼折疊 (LazyVim 沒有)
                         node_decremental = "grm",
                     },
                 },
+                markdown = {
+                    fenced_languages = {
+                        "csharp=c_sharp",
+                        "csharp=cs",
+                    },
+                },
             })
         end,
     }, -- Treesitter Playground (LazyVim 沒有)

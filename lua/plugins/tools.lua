@@ -188,7 +188,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
 
             -- **重要：停用 UI 功能，使用 render-markdown.nvim**
             ui = {
-                enable = false,
+                enable = true,
                 update_debounce = 50, -- 縮短 obsidian 更新時間
                 checkboxes = {
                     [" "] = { char = " ", hl_group = "Normal" }, -- 保持原始，不干擾
@@ -209,21 +209,21 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                     action = function()
                         return require("obsidian").util.gf_passthrough()
                     end,
-                    opts = { noremap = false, expr = true, buffer = true },
+                    opts = { buffer = true, expr = true, noremap = true },
                 },
                 -- 切換複選框
                 ["<leader>ch"] = {
                     action = function()
-                        return require("obsidian").util.toggle_checkbox()
+                        require("obsidian").util.toggle_checkbox()
                     end,
-                    opts = { buffer = true },
+                    opts = { buffer = true, noremap = true },
                 },
                 -- 智慧動作 (跟隨連結或切換複選框)
-                ["<cr>"] = {
+                ["<CR>"] = {
                     action = function()
                         return require("obsidian").util.smart_action()
                     end,
-                    opts = { buffer = true, expr = true },
+                    opts = { buffer = true, expr = true, noremap = true },
                 },
             },
 

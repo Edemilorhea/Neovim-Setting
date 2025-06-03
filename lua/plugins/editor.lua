@@ -65,9 +65,6 @@ return { -- 程式碼折疊 (LazyVim 沒有)
         version = false,
         ft = { "markdown", "text", "tex", "plaintex", "norg" },
         config = function()
-            -- local autolist_blink_integration = false
-            -- vim.g.autolist_blink_integration = autolist_blink_integration
-
             local autolist = require("autolist")
             autolist.setup()
 
@@ -79,18 +76,18 @@ return { -- 程式碼折疊 (LazyVim 沒有)
                     end
 
                     -- 添加此映射以在輸入模式下自動延續列表
-                    map("i", "<CR>", "<CR><Cmd>AutolistNewBullet<CR>", "Auto continue list")
-                    map("n", "<CR>", "<Cmd>AutolistToggleCheckbox<CR><CR>", "Toggle checkbox")
-                    map("n", "<C-r>", "<Cmd>AutolistRecalculate<CR>", "Recalculate list")
+                    map("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>", "Auto continue list")
+                    -- map("n", "<CR>", "<cmd>AutolistToggleCheckbox<cr><CR>", "Toggle checkbox") //Obsidian處理
+                    map("n", "<C-r>", "<cmd>AutolistRecalculate<cr>", "Recalculate list")
                     map("n", "cn", autolist.cycle_next_dr, "cycle next list type")
                     map("n", "cp", autolist.cycle_prev_dr, "cycle prev list type")
-                    map("n", ">>", ">><Cmd>AutolistRecalculate<CR>", "Indent and recalc")
-                    map("n", "<<", "<<<Cmd>AutolistRecalculate<CR>", "Dedent and recalc")
+                    map("n", ">>", ">><cmd>AutolistRecalculate<cr>", "Indent and recalc")
+                    map("n", "<<", "<<<cmd>AutolistRecalculate<cr>", "Dedent and recalc")
                     map("n", "dd", function()
                         vim.cmd('normal! "_dd')
                         vim.cmd("AutolistRecalculate")
                     end, "Delete line and recalc")
-                    map("v", "p", "p<Cmd>AutolistRecalculate<CR>", "Paste and recalc")
+                    map("v", "p", "p<cmd>AutolistRecalculate<cr>", "Paste and recalc")
                 end,
             })
         end,

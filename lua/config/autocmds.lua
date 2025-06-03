@@ -25,3 +25,35 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.expandtab = true
     end,
 })
+
+-- Markdown 智慧動作
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "markdown",
+    callback = function()
+        -- 跟隨連結
+        vim.keymap.set("n", "gf", function()
+            local ok, obs = pcall(require, "obsidian")
+            if ok and obs and obs.util and obs.util.gf_passthrough then
+                return obs.util.gf_passthrough()
+            end
+            return "gf"
+        end, { buffer = true, expr = true, noremap = true, silent = true })
+
+        -- 切換複選框
+        vim.keymap.set("n", "<leader>ch", function()
+            local ok, obs = pcall(require, "obsidian")
+            if ok and obs and obs.util and obs.util.toggle_checkbox then
+                obs.util.toggle_checkbox()
+            end
+        end, { buffer = true, noremap = true, silent = true })
+
+        -- 智慧動作
+        vim.keymap.set("n", "<CR>", function()
+            local ok, obs = pcall(require, "obsidian")
+            if ok and obs and obs.util and obs.util.smart_action then
+                return obs.util.smart_action()
+            end
+            return "<CR>"
+        end, { buffer = true, expr = true, noremap = true, silent = true })
+    end,
+})

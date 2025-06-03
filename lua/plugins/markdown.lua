@@ -25,7 +25,7 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
             -- 渲染模式
             enabled = true,
             debounce = 150,
-            max_file_size = 10.0, -- MB，超過此大小不渲染
+            max_file_size = 5.0, -- MB，超過此大小不渲染
 
             -- 標題設定
             heading = {
@@ -76,7 +76,6 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
             bullet = {
                 enabled = true,
                 icons = { "◉", "○", "✸", "✿" }, -- 層次感更強的圖標
-                -- ordered_icons = { "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨" }, -- 數字圓圈
                 left_pad = 0,
                 right_pad = 1,
                 highlight = "RenderMarkdownBullet",
@@ -104,7 +103,7 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
                     star = { raw = "[*]", rendered = "⭐ ", highlight = "RenderMarkdownStar" },
                 },
                 -- 添加間距設定
-                -- right_pad = 1, -- 右側增加間距
+                right_pad = 1, -- 右側增加間距
             },
             -- 引用設定（更優雅的引用線）
             quote = {
@@ -186,6 +185,13 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
                 example = { raw = "[!EXAMPLE]", rendered = "󰉹 Example", highlight = "RenderMarkdownHint" },
                 quote = { raw = "[!QUOTE]", rendered = "󱆨 Quote", highlight = "RenderMarkdownQuote" },
                 cite = { raw = "[!CITE]", rendered = "󱆨 Cite", highlight = "RenderMarkdownQuote" },
+            },
+
+            dash = {
+                enabled = true,
+                icon = "─",
+                width = "full",
+                highlight = "RenderMarkdownDash",
             },
 
             latex = {

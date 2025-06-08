@@ -200,6 +200,8 @@ return { -- 程式碼折疊 (LazyVim 沒有)
                     "python",
                     "c_sharp",
                     "typescript", -- your extended list
+                    "sql",
+                    "mermaid",
                 },
                 sync_install = false, -- 不同步安裝（除非你想改成 true）
                 auto_install = true, -- 自動安裝缺少的 parser

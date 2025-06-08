@@ -78,7 +78,7 @@ return { -- 程式碼折疊 (LazyVim 沒有)
                     -- 添加此映射以在輸入模式下自動延續列表
                     map("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>", "Auto continue list")
                     -- map("n", "<CR>", "<cmd>AutolistToggleCheckbox<cr><CR>", "Toggle checkbox") //Obsidian處理
-                    map("n", "<C-r>", "<cmd>AutolistRecalculate<cr>", "Recalculate list")
+                    map("n", "<a-r>", "<cmd>AutolistRecalculate<cr>", "Recalculate list")
                     map("n", "cn", autolist.cycle_next_dr, "cycle next list type")
                     map("n", "cp", autolist.cycle_prev_dr, "cycle prev list type")
                     map("n", ">>", ">><cmd>AutolistRecalculate<cr>", "Indent and recalc")

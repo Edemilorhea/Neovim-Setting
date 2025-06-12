@@ -187,6 +187,10 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
                 cite = { raw = "[!CITE]", rendered = "󱆨 Cite", highlight = "RenderMarkdownQuote" },
             },
 
+            strikethrough = {
+                enabled = true,
+                highlight = "RenderMarkdownStrikethrough",
+            },
             dash = {
                 enabled = true,
                 icon = "─",

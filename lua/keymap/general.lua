@@ -5,6 +5,14 @@ function M.setup()
 
     vim.keymap.set("n", "<Esc>", "<Esc>:nohlsearch<CR>", { silent = true })
 
+    vim.keymap.set("n", "<C-u>", function()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+    end, { noremap = true, silent = true })
+
+    vim.keymap.set("n", "<C-i>", function()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+    end, { noremap = true, silent = true })
+
     -- Redo with <Esc>
     vim.keymap.set("n", "<C-r>", function()
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)

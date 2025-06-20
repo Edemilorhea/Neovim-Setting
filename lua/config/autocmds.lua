@@ -57,3 +57,17 @@ vim.api.nvim_create_autocmd("FileType", {
         end, { buffer = true, expr = true, noremap = true, silent = true })
     end,
 })
+
+local im_select_path = "im-select-imm.exe"
+
+-- vim.api.nvim_create_autocmd("InsertEnter", {
+--     callback = function()
+--         os.execute(im_select_path .. " 1028-0") -- 進入 Insert 模式自動切到中文
+--     end,
+-- })
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+    callback = function()
+        os.execute(im_select_path .. " 1033") -- 離開 Insert 模式自動切回英文
+    end,
+})

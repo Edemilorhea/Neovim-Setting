@@ -146,13 +146,43 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
                 hyperlink = "🔗 ", -- 超連結
                 highlight = "RenderMarkdownLink",
                 custom = {
+                    internal_heading = {
+                        pattern = "^#[^%s]",
+                        icon = "📍 ",
+                        highlight = "RenderMarkdownInternalLink",
+                    },
                     web = { pattern = "^http", icon = "🌐 ", highlight = "RenderMarkdownLink" },
                     github = { pattern = "github%.com", icon = "🐙 ", highlight = "RenderMarkdownLink" },
                     youtube = { pattern = "youtube%.com", icon = "📺 ", highlight = "RenderMarkdownLink" },
                     file = { pattern = "^file:", icon = "📁 ", highlight = "RenderMarkdownLink" },
                     wiki = { pattern = "%[%[.*%]%]", icon = "📝 ", highlight = "RenderMarkdownWikiLink" },
+                    obsidian = {
+                        pattern = "obsidian://",
+                        icon = "🔮 ",
+                        highlight = "RenderMarkdownLink",
+                    },
+                    pdf = {
+                        pattern = "%.pdf$",
+                        icon = "📄 ",
+                        highlight = "RenderMarkdownLink",
+                    },
+                    markdown = {
+                        pattern = "%.md$",
+                        icon = "📋 ",
+                        highlight = "RenderMarkdownLink",
+                    },
+                    heading = {
+                        pattern = "#[%w%-_]+",
+                        icon = "🔗 ",
+                        highlight = "RenderMarkdownHeadingLink",
+                    },
+                    anchor = {
+                        pattern = "#.*",
+                        icon = "⚓ ",
+                        highlight = "RenderMarkdownAnchorLink",
+                    },
                 },
-            }, -- 數學公式設定
+            },
 
             callout = {
                 -- GitHub 風格標註
@@ -227,6 +257,42 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
             vim.g.mkdp_auto_start = 0
         end,
     },
+    {
+        -- 保留原有的 TOC 插件
+        "mzlogin/vim-markdown-toc",
+        ft = "markdown",
+        config = function()
+            vim.g.vmt_auto_update_on_save = 0 -- 關閉自動更新，避免覆蓋 Wiki 格式
+            vim.g.vmt_fence_text = "TOC"
+            vim.g.vmt_fence_closing_text = "/TOC"
+        end,
+        keys = {
+            -- Markdown 格式 TOC
+            { "<leader>mt", ":GenTocGFM<CR>", desc = "Generate Markdown TOC" },
+            -- Wiki 格式 TOC（自訂函數）
+            {
+                "<leader>mw",
+                function()
+                    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                    local toc = { "<!-- TOC -->" }
+
+                    for _, line in ipairs(lines) do
+                        local level, title = line:match("^(#+)%s+(.+)")
+                        if level and title then
+                            local indent = string.rep("    ", #level - 1)
+                            table.insert(toc, string.format("%s* [[#%s]]", indent, title))
+                        end
+                    end
+
+                    table.insert(toc, "<!-- /TOC -->")
+                    table.insert(toc, "")
+                    vim.api.nvim_buf_set_lines(0, 0, 0, false, toc)
+                end,
+                desc = "Generate Wiki TOC",
+            },
+        },
+    },
+
     -- {
     --     "toppair/peek.nvim",
     --     build = "deno task --quiet build:fast", -- 構建命令

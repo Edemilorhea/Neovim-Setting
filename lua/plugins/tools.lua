@@ -51,11 +51,9 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                 --   path = vim.fn.expand("~/Documents/WorkVault"),
                 -- },
             },
-
             -- 筆記管理設定
             notes_subdir = "notes", -- 筆記子目錄，可設為 nil 如果不需要
             new_notes_location = "notes_subdir", -- 新筆記建立位置
-
             -- 日記設定
             daily_notes = {
                 folder = "dailies", -- 日記資料夾
@@ -64,13 +62,11 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                 default_tags = { "daily-notes" }, -- 預設標籤
                 template = nil, -- 日記模板，可設定模板檔名
             },
-
             -- 自動完成設定
             completion = {
                 nvim_cmp = true, -- 啟用 nvim-cmp 整合
                 min_chars = 2, -- 觸發完成的最少字元數
             },
-
             -- 筆記 ID 生成函數
             note_id_func = function(title)
                 local suffix = ""
@@ -85,22 +81,31 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                 end
                 return tostring(os.time()) .. "-" .. suffix
             end,
-
             -- 筆記路徑生成函數
             note_path_func = function(spec)
                 local path = spec.dir / tostring(spec.id)
                 return path:with_suffix(".md")
             end,
-
-            -- 連結格式設定
+            -- 自訂 Wiki 連結函數處理中文標題
             wiki_link_func = function(opts)
-                return require("obsidian.util").wiki_link_id_prefix(opts)
+                if opts.anchor then
+                    local anchor = opts.anchor.anchor
+                    if opts.path then
+                        return string.format("[[%s#%s]]", opts.path, anchor)
+                    else
+                        return string.format("[[#%s]]", anchor)
+                    end
+                end
+                if opts.label and opts.label ~= opts.path then
+                    return string.format("[[%s|%s]]", opts.path or opts.id, opts.label)
+                else
+                    return string.format("[[%s]]", opts.path or opts.id)
+                end
             end,
             markdown_link_func = function(opts)
                 return require("obsidian.util").markdown_link(opts)
             end,
-            preferred_link_style = "wiki", -- "wiki" 或 "markdown"
-
+            preferred_link_style = "markdown", -- "wiki" 或 "markdown"
             -- 前置資料 (frontmatter) 設定
             disable_frontmatter = false,
             note_frontmatter_func = function(note)
@@ -115,7 +120,6 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                 end
                 return out
             end,
-
             -- 模板設定
             templates = {
                 folder = "templates", -- 模板資料夾
@@ -128,7 +132,6 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                     end,
                 },
             },
-
             -- 外部連結處理 (跨平台)
             follow_url_func = function(url)
                 local os_name = vim.loop.os_uname().sysname
@@ -140,7 +143,6 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                     vim.fn.jobstart({ "xdg-open", url })
                 end
             end,
-
             -- 圖片處理 (跨平台)
             follow_img_func = function(img)
                 local os_name = vim.loop.os_uname().sysname
@@ -152,7 +154,6 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                     vim.fn.jobstart({ "xdg-open", img })
                 end
             end,
-
             -- 選擇器設定
             picker = {
                 name = "telescope.nvim", -- 使用 telescope
@@ -165,15 +166,12 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                     insert_tag = "<C-l>", -- 插入標籤
                 },
             },
-
             -- 搜尋設定
             sort_by = "modified", -- 按修改時間排序
             sort_reversed = true, -- 最新的在前
             search_max_lines = 1000, -- 搜尋最大行數
-
             -- 筆記開啟方式
             open_notes_in = "current", -- "current", "vsplit", "hsplit"
-
             -- 附件設定
             attachments = {
                 img_folder = "assets/imgs", -- 圖片資料夾
@@ -185,7 +183,6 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                     return string.format("![%s](%s)", path.name, path)
                 end,
             },
-
             -- **重要：停用 UI 功能，使用 render-markdown.nvim**
             ui = {
                 enable = true,
@@ -202,7 +199,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                     ["/"] = { char = "/", hl_group = "Normal" },
                 },
             },
-            -- 按鍵對應 (保留核心功能)
+            -- 按鍵對應 (保留核心功能 + 新增 TOC 功能)
             mappings = {
                 -- 跟隨連結
                 ["gf"] = {
@@ -225,23 +222,176 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                     end,
                     opts = { buffer = true, expr = true, noremap = true },
                 },
+
+                -- **新增 TOC 功能**
+                -- 生成 Wiki 格式 TOC (支援中文標題)
+                ["<leader>mt"] = {
+                    action = function()
+                        local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                        local toc = { "<!-- TOC -->" }
+
+                        for _, line in ipairs(lines) do
+                            local level, title = line:match("^(#+)%s+(.+)")
+                            if level and title then
+                                local indent = string.rep("    ", #level - 1)
+                                table.insert(toc, string.format("%s* [[#%s]]", indent, title))
+                            end
+                        end
+
+                        table.insert(toc, "<!-- /TOC -->")
+                        table.insert(toc, "")
+
+                        -- 尋找並替換現有 TOC
+                        local start_line, end_line = nil, nil
+                        local current_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                        for i, line in ipairs(current_lines) do
+                            if line:match("<!-- TOC -->") then
+                                start_line = i - 1
+                            elseif line:match("<!-- /TOC -->") and start_line then
+                                end_line = i
+                                break
+                            end
+                        end
+
+                        if start_line and end_line then
+                            vim.api.nvim_buf_set_lines(0, start_line, end_line, false, toc)
+                            print("TOC 已更新")
+                        else
+                            vim.api.nvim_buf_set_lines(0, 0, 0, false, toc)
+                            print("TOC 已生成")
+                        end
+                    end,
+                    opts = { buffer = true, noremap = true },
+                },
+
+                -- 生成標準 Markdown TOC
+                ["<leader>mT"] = {
+                    action = function()
+                        local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                        local toc = { "<!-- TOC -->" }
+
+                        for _, line in ipairs(lines) do
+                            local level, title = line:match("^(#+)%s+(.+)")
+                            if level and title then
+                                local indent = string.rep("  ", #level - 1)
+                                local anchor = title:lower():gsub("%s+", "-"):gsub("[^%w%-]", "")
+                                table.insert(toc, string.format("%s- [%s](#%s)", indent, title, anchor))
+                            end
+                        end
+
+                        table.insert(toc, "<!-- /TOC -->")
+                        table.insert(toc, "")
+
+                        -- 替換邏輯同上
+                        local start_line, end_line = nil, nil
+                        local current_lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                        for i, line in ipairs(current_lines) do
+                            if line:match("<!-- TOC -->") then
+                                start_line = i - 1
+                            elseif line:match("<!-- /TOC -->") and start_line then
+                                end_line = i
+                                break
+                            end
+                        end
+
+                        if start_line and end_line then
+                            vim.api.nvim_buf_set_lines(0, start_line, end_line, false, toc)
+                            print("Markdown TOC 已更新")
+                        else
+                            vim.api.nvim_buf_set_lines(0, 0, 0, false, toc)
+                            print("Markdown TOC 已生成")
+                        end
+                    end,
+                    opts = { buffer = true, noremap = true },
+                },
+
+                -- 移除 TOC
+                ["<leader>mr"] = {
+                    action = function()
+                        local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                        local start_line, end_line = nil, nil
+
+                        for i, line in ipairs(lines) do
+                            if line:match("<!-- TOC -->") then
+                                start_line = i - 1
+                            elseif line:match("<!-- /TOC -->") and start_line then
+                                end_line = i
+                                break
+                            end
+                        end
+
+                        if start_line and end_line then
+                            vim.api.nvim_buf_set_lines(0, start_line, end_line, false, {})
+                            print("TOC 已移除")
+                        else
+                            print("未找到 TOC")
+                        end
+                    end,
+                    opts = { buffer = true, noremap = true },
+                },
+
+                -- 快速跳轉到 TOC
+                ["<leader>mg"] = {
+                    action = function()
+                        local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                        for i, line in ipairs(lines) do
+                            if line:match("<!-- TOC -->") then
+                                vim.api.nvim_win_set_cursor(0, { i, 0 })
+                                print("跳轉到 TOC")
+                                return
+                            end
+                        end
+                        print("未找到 TOC")
+                    end,
+                    opts = { buffer = true, noremap = true },
+                },
             },
 
             -- Obsidian 應用設定
             use_advanced_uri = false, -- 是否使用 Advanced URI 插件
             open_app_foreground = false, -- 是否將 Obsidian 應用帶到前台
 
-            -- 回調函數 (可選)
+            -- 回調函數 (含自動 TOC 更新)
             callbacks = {
-                post_setup = function(client) end,
+                post_setup = function(client)
+                    print("Obsidian.nvim 已載入")
+                end,
                 enter_note = function(client, note) end,
                 leave_note = function(client, note) end,
-                pre_write_note = function(client, note) end,
-                post_set_workspace = function(client, workspace) end,
+
+                -- **自動更新 TOC 功能**
+                pre_write_note = function(client, note)
+                    -- 保存前檢查是否需要更新 TOC
+                    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                    local has_toc = false
+
+                    for _, line in ipairs(lines) do
+                        if line:match("<!-- TOC -->") then
+                            has_toc = true
+                            break
+                        end
+                    end
+
+                    -- 如果有 TOC 標記，自動重新生成 (可選功能，預設關閉)
+                    -- 如果要啟用自動更新，請取消下面的註解
+                    -- if has_toc then
+                    --     vim.schedule(function()
+                    --         -- 觸發 Wiki TOC 重新生成
+                    --         local current_mappings = require("obsidian").get_client().opts.mappings
+                    --         if current_mappings["<leader>mt"] then
+                    --             current_mappings["<leader>mt"].action()
+                    --         end
+                    --     end)
+                    -- end
+                end,
+
+                post_set_workspace = function(client, workspace)
+                    print("切換到工作區: " .. workspace.name)
+                end,
             },
         },
     },
-    --
+
     -- 修改 Telescope 設定 (LazyVim 有但要修改)
     {
         "nvim-lua/plenary.nvim",

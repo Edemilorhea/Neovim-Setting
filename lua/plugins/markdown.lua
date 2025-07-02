@@ -85,12 +85,12 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
             checkbox = {
                 enabled = true,
                 unchecked = {
-                    icon = "󰄱 ",
+                    icon = "⬜",
                     highlight = "RenderMarkdownUnchecked",
                     scope_highlight = nil,
                 },
                 checked = {
-                    icon = "󰱒 ",
+                    icon = "✅",
                     highlight = "RenderMarkdownChecked",
                     scope_highlight = nil,
                 },

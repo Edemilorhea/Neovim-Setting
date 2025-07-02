@@ -185,7 +185,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
             },
             -- **重要：停用 UI 功能，使用 render-markdown.nvim**
             ui = {
-                enable = true,
+                enable = false,
                 update_debounce = 50, -- 縮短 obsidian 更新時間
                 checkboxes = {
                     [" "] = { char = " ", hl_group = "Normal" }, -- 保持原始，不干擾
@@ -359,30 +359,16 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                 enter_note = function(client, note) end,
                 leave_note = function(client, note) end,
 
-                -- **自動更新 TOC 功能**
+                -- 修正：簡化 pre_write_note 避免異步問題
                 pre_write_note = function(client, note)
-                    -- 保存前檢查是否需要更新 TOC
+                    -- 簡單檢查，不執行複雜異步操作
                     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-                    local has_toc = false
-
                     for _, line in ipairs(lines) do
                         if line:match("<!-- TOC -->") then
-                            has_toc = true
+                            -- 僅標記存在 TOC，不執行更新
                             break
                         end
                     end
-
-                    -- 如果有 TOC 標記，自動重新生成 (可選功能，預設關閉)
-                    -- 如果要啟用自動更新，請取消下面的註解
-                    -- if has_toc then
-                    --     vim.schedule(function()
-                    --         -- 觸發 Wiki TOC 重新生成
-                    --         local current_mappings = require("obsidian").get_client().opts.mappings
-                    --         if current_mappings["<leader>mt"] then
-                    --             current_mappings["<leader>mt"].action()
-                    --         end
-                    --     end)
-                    -- end
                 end,
 
                 post_set_workspace = function(client, workspace)
@@ -433,7 +419,7 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
         keys = {
             { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files" },
             { "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Live Grep" },
-            { "fb", "Telescope buffers", desc = "Buffers" },
+            { "<leader>fb", "Telescope buffers", desc = "Buffers" },
             { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help Tags" },
         },
     },

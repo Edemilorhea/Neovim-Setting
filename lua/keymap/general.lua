@@ -5,26 +5,8 @@ function M.setup()
 
     vim.keymap.set("n", "<Esc>", "<Esc>:nohlsearch<CR>", { silent = true })
 
-    -- 防止進入visualmode
-    local function safe_command(cmd_key, desc)
-        return function()
-            -- 執行原始命令
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(cmd_key, true, false, true), "n", true)
-
-            -- 延遲檢查並條件式回到 Normal Mode
-            vim.schedule(function()
-                local mode = vim.fn.mode()
-                if mode == "v" or mode == "V" or mode == "\22" then
-                    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
-                end
-            end)
-        end
-    end
-
-    vim.keymap.set("n", "<C-o>", safe_command("<C-o>", "Previous location"))
-    vim.keymap.set("n", "<C-i>", safe_command("<C-i>", "Next location"))
-    vim.keymap.set("n", "u", safe_command("u", "Undo"))
-    vim.keymap.set("n", "<C-r>", safe_command("<C-r>", "Redo"))
+    vim.keymap.set("v", "<C-o>", "<Esc>:normal! <C-o><CR>", { desc = "Jump back" })
+    vim.keymap.set("v", "<C-i>", "<Esc>:normal! <C-i><CR>", { desc = "Jump forward" })
 
     -- 常用模式快捷鍵（共用於 Neovim + VSCode）
     vim.keymap.set("n", "o", "o<Esc>", opts)

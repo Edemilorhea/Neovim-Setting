@@ -252,9 +252,15 @@ return { -- Glow Markdown 終端預覽 (LazyVim 沒有)
     {
         "iamcco/markdown-preview.nvim",
         lazy = false,
-        build = "cd app && npm install", -- 改用 npm
+        build = function()
+            -- Windows 使用函數安裝而非 shell 命令
+            vim.fn["mkdp#util#install"]()
+        end,
         config = function()
             vim.g.mkdp_auto_start = 0
+            -- Windows 瀏覽器設定
+            vim.g.mkdp_browser = "msedge" -- 或 'msedge', 'firefox'
+            vim.g.mkdp_echo_preview_url = 1 -- 顯示 URL
         end,
     },
     {

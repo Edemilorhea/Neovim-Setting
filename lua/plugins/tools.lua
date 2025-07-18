@@ -427,16 +427,8 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
         "HakonHarnes/img-clip.nvim",
         opts = {
             default = {
-                -- 儲存圖片到當前檔案目錄內的 assets 子資料夾
-                dir_path = function()
-                    local current_file = vim.api.nvim_buf_get_name(0)
-                    local current_dir = vim.fn.fnamemodify(current_file, ":h")
-                    return current_dir .. "/assets"
-                end,
-
+                dir_path = "assets",
                 extension = "png",
-
-                -- 使用者可自訂檔名，否則自動以時間戳命名
                 file_name = function()
                     local input = vim.fn.input("Image file name (no extension, leave blank for timestamp): ")
                     if input ~= "" then
@@ -445,45 +437,35 @@ return { -- Peek Markdown 預覽 (LazyVim 沒有)
                         return os.date("%Y%m%d-%H%M%S")
                     end
                 end,
-
+                -- 相對路徑設定
                 use_absolute_path = false,
                 relative_to_current_file = true,
-                -- 插入語法為 Markdown 格式
-                template = "![$CURSOR]($RELATIVE_FILE_PATH)",
+                template = "![$CURSOR]($FILE_PATH)",
                 url_encode_path = true,
                 relative_template_path = true,
                 use_cursor_in_template = true,
                 insert_mode_after_paste = true,
-
-                prompt_for_file_name = false, -- 自訂輸入邏輯已寫在 file_name 裡
+                prompt_for_file_name = false,
                 show_dir_path_in_prompt = false,
-
-                -- base64 設定（不啟用）
                 max_base64_size = 10,
                 embed_image_as_base64 = false,
-
-                -- 圖片處理
                 process_cmd = "",
                 copy_images = false,
                 download_images = true,
-
-                -- 拖曳貼圖
                 drag_and_drop = {
                     enabled = true,
                     insert_mode = false,
                 },
             },
-
-            -- Markdown 專用插入格式
+            -- Markdown 專用設定 (修正為相對路徑)
             filetypes = {
                 markdown = {
-                    template = "![$CURSOR]($FILE_PATH)",
+                    template = "![$CURSOR]($FILE_PATH)", -- 改為相對路徑
                     url_encode_path = true,
                     download_images = false,
                 },
             },
         },
-
         keys = {
             {
                 "<leader>ip",

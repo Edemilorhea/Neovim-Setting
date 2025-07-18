@@ -7,6 +7,8 @@ function M.setup()
 
     vim.keymap.set("v", "<C-o>", "<Esc>:normal! <C-o><CR>", { desc = "Jump back" })
     vim.keymap.set("v", "<C-i>", "<Esc>:normal! <C-i><CR>", { desc = "Jump forward" })
+    vim.keymap.set("v", "U", "<Esc>:normal! U<CR>", { desc = "Undo line" })
+    vim.keymap.set("v", "<C-r>", "<Esc>:normal! <C-r><CR>", { desc = "Redo" })
 
     -- 常用模式快捷鍵（共用於 Neovim + VSCode）
     vim.keymap.set("n", "o", "o<Esc>", opts)

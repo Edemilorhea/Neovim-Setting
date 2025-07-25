@@ -1,4 +1,4 @@
--- 初始化 LazyVim
+-- 初始化 LazyVim (優化版本)
 require("config.lazy")
 
 -- 環境分離設定
@@ -12,7 +12,7 @@ if vim.g.vscode then
     
     -- 載入 VSCode 特定設定
     if pcall(require, "plugin.lsp") then
-        print("🔌 VSCode Neovim 環境已初始化")
+        vim.notify("🔌 VSCode Neovim 環境已初始化", vim.log.levels.INFO)
     end
     
     -- 載入重構後的按鍵設定

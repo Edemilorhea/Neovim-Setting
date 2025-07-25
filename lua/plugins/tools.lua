@@ -57,6 +57,7 @@ return {
         "epwalsh/obsidian.nvim",
         version = "*", -- 使用最新穩定版
         vscode = false,
+        ft = "markdown", -- 只在 markdown 檔案中載入
         -- 只有找到 Obsidian vault 時才啟用
         enabled = vault_exists,
         cond = function()
@@ -71,10 +72,6 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim", -- 必備依賴
             -- 可選依賴
-            {
-                "hrsh7th/nvim-cmp", -- 自動完成
-                event = "VeryLazy",
-            },
             "nvim-telescope/telescope.nvim", -- 搜尋功能
             "nvim-treesitter/nvim-treesitter", -- 語法高亮
         },
@@ -110,7 +107,7 @@ return {
                 },
                 -- 自動完成設定
                 completion = {
-                    nvim_cmp = true, -- 啟用 nvim-cmp 整合
+                    nvim_cmp = false, -- 停用 nvim-cmp 整合（已改用 blink.cmp）
                     min_chars = 2, -- 觸發完成的最少字元數
                 },
                 -- 筆記 ID 生成函數
@@ -406,17 +403,12 @@ return {
             }
         end,
     },
-    -- 修改 Telescope 設定 (LazyVim 有但要修改)
-    {
-        "nvim-lua/plenary.nvim",
-        lazy = false, -- ✅ 立即加載，確保任何時候都能用
-        vscode = true, -- ✅ 明確指定在 VSCode 中也會載入
-    },
+    -- 註解：plenary.nvim 已在 development.lua 中配置，避免重複載入
     {
         "nvim-telescope/telescope.nvim",
         vscode = false,
         version = false,
-        lazy = false, -- 立即加載以避免命令延遲問題
+        cmd = { "Telescope" }, -- 使用命令時載入
         dependencies = {
             {
                 "nvim-telescope/telescope-fzf-native.nvim",

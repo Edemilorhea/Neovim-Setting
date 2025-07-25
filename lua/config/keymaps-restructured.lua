@@ -15,22 +15,4 @@ else
     require("keymap.hotKeyMaps").setup()
 end
 
--- 延遲載入後的按鍵設定覆寫
-vim.api.nvim_create_autocmd("User", {
-    pattern = "VeryLazy",
-    callback = function()
-        -- 移除 LazyVim 的 terminal 快捷鍵綁定，確保註解功能優先
-        pcall(vim.keymap.del, "n", "<C-/>")
-        pcall(vim.keymap.del, "t", "<C-/>")
-        pcall(vim.keymap.del, "n", "<C-_>")
-        pcall(vim.keymap.del, "t", "<C-_>")
-        
-        -- 重新設定註解快捷鍵（個人設定優先）
-        vim.keymap.set("n", "<C-/>", "gcc", { remap = true, desc = "Comment line" })
-        vim.keymap.set("n", "<C-_>", "gcc", { remap = true, desc = "Comment line" })
-        vim.keymap.set("v", "<C-/>", "gc", { remap = true, desc = "Comment selection" })
-        vim.keymap.set("v", "<C-_>", "gc", { remap = true, desc = "Comment selection" })
-        
-        print("個人按鍵設定已覆寫 LazyVim 預設值")
-    end,
-})
+-- 註解：註解快捷鍵現在統一在 plugins/shared.lua 中的 mini.comment 配置

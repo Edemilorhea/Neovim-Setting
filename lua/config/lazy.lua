@@ -18,17 +18,18 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import/override with your plugins
+    -- 結構化插件分類 (按載入順序)
+    { import = "plugins.shared" }, -- VSCode + Neovim 共用插件
+    { import = "plugins.development" }, -- 開發工具 (兩邊都需要)
+    { import = "plugins.neovim-only", cond = not vim.g.vscode }, -- 純 Neovim 插件
+    { import = "plugins.ui-restructured", cond = not vim.g.vscode }, -- UI 插件
+    { import = "plugins.markdown-enhanced", cond = not vim.g.vscode }, -- Markdown 生態系統
+    -- 其他插件 (向後相容性)
     { import = "plugins" },
-    -- 新的結構化插件分類
-    { import = "plugins.shared" },
-    { import = "plugins.neovim-only", cond = not vim.g.vscode },
-    { import = "plugins.ui-restructured", cond = not vim.g.vscode },
   },
   defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
-    lazy = false,
+    -- 啟用 lazy loading 以提升啟動速度
+    lazy = true,
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
     version = false, -- always use the latest git commit
@@ -43,17 +44,29 @@ require("lazy").setup({
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
   performance = {
+    cache = {
+      enabled = true,
+    },
+    reset_packpath = true, -- reset the package path to improve startup time
     rtp = {
+      reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
       -- disable some rtp plugins
       disabled_plugins = {
         "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
         "zipPlugin",
+        "rplugin", -- disable rplugin.vim loading
+        "syntax", -- disable syntax.vim loading
+        "synmenu", -- disable synmenu.vim loading
+        "optwin", -- disable optwin.vim loading
+        "compiler", -- disable compiler.vim loading
+        "bugreport", -- disable bugreport.vim loading
+        "ftplugin", -- disable ftplugin.vim loading (performance improvement)
       },
     },
   },

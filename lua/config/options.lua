@@ -43,13 +43,15 @@ if not g.vscode then
     opt.foldcolumn = "1"
 end
 
--- 確保所有檔案類型都使用 4 格縮排
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "*",
-    callback = function()
-        vim.bo.tabstop = 4
-        vim.bo.shiftwidth = 4
-        vim.bo.softtabstop = 4
-        vim.bo.expandtab = true
-    end,
-})
+-- 延遲載入縮排設定以加速啟動
+vim.defer_fn(function()
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = "*",
+        callback = function()
+            vim.bo.tabstop = 4
+            vim.bo.shiftwidth = 4
+            vim.bo.softtabstop = 4
+            vim.bo.expandtab = true
+        end,
+    })
+end, 50)

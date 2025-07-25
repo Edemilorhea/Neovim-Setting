@@ -117,12 +117,12 @@ return {
         },
         config = function(_, opts)
             require("mini.comment").setup(opts)
-            
-            -- 統一的註解快捷鍵設定，VSCode 和 Neovim 通用
-            vim.keymap.set("n", "<C-/>", "gcc", { remap = true, desc = "Comment line" })
-            vim.keymap.set("n", "<C-_>", "gcc", { remap = true, desc = "Comment line" })
-            vim.keymap.set("v", "<C-/>", "gc", { remap = true, desc = "Comment selection" })
-            vim.keymap.set("v", "<C-_>", "gc", { remap = true, desc = "Comment selection" })
         end,
+        keys = {
+            { "<C-/>", "gcc", mode = "n", remap = true, desc = "Comment line" },
+            { "<C-_>", "gcc", mode = "n", remap = true, desc = "Comment line" },
+            { "<C-/>", "gc", mode = "v", remap = true, desc = "Comment selection" },
+            { "<C-_>", "gc", mode = "v", remap = true, desc = "Comment selection" },
+        },
     },
 }

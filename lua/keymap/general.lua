@@ -12,8 +12,20 @@ function M.setup()
     -- Visual 模式下的跳轉和復原
     vim.keymap.set("v", "<C-o>", "<Esc>:normal! <C-o><CR>", { desc = "Jump back" })
     vim.keymap.set("v", "<C-i>", "<Esc>:normal! <C-i><CR>", { desc = "Jump forward" })
-    vim.keymap.set("v", "U", "<Esc>:normal! U<CR>", { desc = "Undo line" })
     vim.keymap.set("v", "<C-r>", "<Esc>:normal! <C-r><CR>", { desc = "Redo" })
+    
+    -- Visual 模式下的大小寫轉換
+    vim.keymap.set("v", "U", "gU", { desc = "Convert to uppercase" })
+    vim.keymap.set("v", "u", "gu", { desc = "Convert to lowercase" })
+    
+    -- Normal 模式下的 undo，確保不會停留在 visual mode
+    vim.keymap.set("n", "u", function()
+        vim.cmd("normal! u")
+        -- 如果進入了 visual mode，就退出
+        if vim.fn.mode():match("[vV]") then
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+        end
+    end, { desc = "Undo and exit visual mode" })
 
     -- 核心編輯行為（個人偏好設定，VSCode + Neovim 共用）
     vim.keymap.set("n", "o", "o<Esc>", { desc = "New line below without insert" })

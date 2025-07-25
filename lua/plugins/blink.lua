@@ -1,5 +1,6 @@
 return {
     "saghen/blink.cmp",
+    event = "InsertEnter", -- 進入插入模式時載入
     dependencies = {
         "rafamadriz/friendly-snippets",
     },

@@ -20,6 +20,10 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import/override with your plugins
     { import = "plugins" },
+    -- 新的結構化插件分類
+    { import = "plugins.shared" },
+    { import = "plugins.neovim-only", cond = not vim.g.vscode },
+    { import = "plugins.ui-restructured", cond = not vim.g.vscode },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -30,7 +34,10 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { 
+    colorscheme = { "tokyonight", "habamax" },
+    missing = true,
+  },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update

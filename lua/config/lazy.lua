@@ -18,6 +18,8 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    -- 在 VSCode 環境下停用 nvim-treesitter-textobjects
+    { "nvim-treesitter/nvim-treesitter-textobjects", enabled = not vim.g.vscode },
     -- 結構化插件分類 (按載入順序)
     { import = "plugins.shared" }, -- VSCode + Neovim 共用插件
     { import = "plugins.development" }, -- 開發工具 (兩邊都需要)

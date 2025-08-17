@@ -13,32 +13,38 @@ function M.setup()
     vim.keymap.set("v", "<C-o>", "<Esc>:normal! <C-o><CR>", { desc = "Jump back" })
     vim.keymap.set("v", "<C-i>", "<Esc>:normal! <C-i><CR>", { desc = "Jump forward" })
     vim.keymap.set("v", "<C-r>", "<Esc>:normal! <C-r><CR>", { desc = "Redo" })
-    
+
     -- Visual 模式下的大小寫轉換
     vim.keymap.set("v", "U", "gU", { desc = "Convert to uppercase" })
     vim.keymap.set("v", "u", "gu", { desc = "Convert to lowercase" })
-    
+
     -- Normal 模式下的 undo，確保不會停留在 visual mode
-    vim.keymap.set("n", "u", function()
-        vim.cmd("normal! u")
-        -- 如果進入了 visual mode，就退出
-        if vim.fn.mode():match("[vV]") then
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
-        end
-    end, { desc = "Undo and exit visual mode" })
+    -- vim.keymap.set("n", "u", function()
+    --     vim.cmd("normal! u")
+    --     if vim.fn.mode():match("[vV]") then
+    --         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+    --     end
+    -- end, { desc = "Undo and exit visual mode" })
+    --
+    -- vim.keymap.set("n", "<C-R>", function()
+    --     vim.cmd("normal! \\<C-R>")
+    --     if vim.fn.mode():match("[vV]") then
+    --         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+    --     end
+    -- end, { desc = "Redo and exit visual mode" })
 
     -- 核心編輯行為（個人偏好設定，VSCode + Neovim 共用）
     vim.keymap.set("n", "o", "o<Esc>", { desc = "New line below without insert" })
     vim.keymap.set("n", "O", "O<Esc>", { desc = "New line above without insert" })
-    
+
     -- 刪除到黑洞暫存器（避免覆蓋剪貼簿）
     vim.keymap.set({ "n", "v" }, "d", '"_d', { desc = "Delete to black hole" })
     vim.keymap.set("n", "D", '"_D', { desc = "Delete to end of line (black hole)" })
     vim.keymap.set("n", "dd", '"_dd', { desc = "Delete line (black hole)" })
-    
+
     -- 縮排控制
     vim.keymap.set("i", "<S-Tab>", "<C-d>", { desc = "Unindent" })
-    
+
     -- Visual 模式下貼上不覆蓋暫存器
     vim.keymap.set("v", "p", '"_dP', { desc = "Paste without yanking" })
 
@@ -47,11 +53,11 @@ function M.setup()
     vim.keymap.set("n", "L", "$", { desc = "Go to end of line" })
     vim.keymap.set("v", "H", "^", { desc = "Go to first non-blank character" })
     vim.keymap.set("v", "L", "$", { desc = "Go to end of line" })
-    
+
     -- 快速儲存（兩邊通用）
     vim.keymap.set("n", "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
     vim.keymap.set("i", "<C-s>", "<Esc><cmd>w<cr>", { desc = "Save file" })
-    
+
     -- LazyVim 配置重載（只在 Neovim 中有效）
     if not vim.g.vscode then
         local function reload_lazyvim()

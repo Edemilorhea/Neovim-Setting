@@ -12,9 +12,6 @@ function M.setup()
         vim.keymap.set("n", "<leader>bc", "<cmd>BufferLinePickClose<CR>", {
             desc = "選擇關閉 Buffer",
         })
-        vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", {
-            desc = "關閉當前 Buffer",
-        })
     end
 
     -- Flash 快捷鍵
@@ -36,32 +33,6 @@ function M.setup()
         desc = "Toggle Flash Search",
     })
 
-    -- Telescope 快捷鍵
-    vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", {
-        noremap = true,
-        silent = true,
-        desc = "Find Files",
-    })
-    vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", {
-        noremap = true,
-        silent = true,
-        desc = "Live Grep",
-    })
-    vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", {
-        noremap = true,
-        silent = true,
-        desc = "List Buffers",
-    })
-    vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", {
-        noremap = true,
-        silent = true,
-        desc = "Help Tags",
-    })
-    vim.keymap.set("n", "<leader>td", "<cmd>Telescope diagnostics<CR>", {
-        noremap = true,
-        silent = true,
-        desc = "Telescope Diagnostics",
-    })
 
     -- LSP 快捷鍵
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
@@ -69,13 +40,6 @@ function M.setup()
     })
     vim.keymap.set("n", "ca", vim.lsp.buf.code_action, {
         desc = "LSP Code Action",
-    })
-    vim.keymap.set("n", "<leader>id", function()
-        vim.diagnostic.open_float(nil, {
-            focus = false,
-        })
-    end, {
-        desc = "顯示行內診斷訊息",
     })
 
     -- 僅為了 WhichKey 顯示用，不重新綁定
@@ -103,8 +67,6 @@ function M.setup()
     vim.keymap.set("i", "<C-y>", "", {
         desc = "確認補全 (Ctrl + y)",
     })
-
-    vim.keymap.set("n", "<leader>mp", "<cmd>Glow<CR>", { desc = "Markdown 預覽" })
 end
 
 return M

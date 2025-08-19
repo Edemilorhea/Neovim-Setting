@@ -9,58 +9,6 @@ return {
         vscode = true,
     },
 
-    -- Telescope 文件搜尋 (只在 Neovim 中使用)
-    {
-        "nvim-telescope/telescope.nvim",
-        cmd = { "Telescope" },
-        cond = not vim.g.vscode,
-        dependencies = {
-            {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                build = "make",
-                enabled = vim.fn.executable("make") == 1,
-            },
-        },
-        config = function()
-            require("telescope").setup({
-                defaults = {
-                    prompt_prefix = "> ",
-                    selection_caret = "> ",
-                    path_display = { "smart" },
-                    file_ignore_patterns = { "node_modules", ".git/" },
-                    layout_config = {
-                        horizontal = {
-                            preview_width = 0.55,
-                            results_width = 0.8,
-                        },
-                        vertical = {
-                            mirror = false,
-                        },
-                        width = 0.87,
-                        height = 0.80,
-                        preview_cutoff = 120,
-                    },
-                },
-                extensions = {
-                    fzf = {
-                        fuzzy = true,
-                        override_generic_sorter = true,
-                        override_file_sorter = true,
-                        case_mode = "smart_case",
-                    },
-                },
-            })
-            pcall(require("telescope").load_extension, "fzf")
-        end,
-        keys = {
-            { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find Files" },
-            { "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Live Grep" },
-            { "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
-            { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help Tags" },
-            { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent Files" },
-            { "<leader>fw", "<cmd>Telescope grep_string<CR>", desc = "Find Word" },
-        },
-    },
 
     -- Mason LSP 管理器 (只在 Neovim 中使用)
     {
@@ -116,10 +64,4 @@ return {
         },
     },
 
-    -- Visual 模式重複操作 (VSCode + Neovim 共用)
-    {
-        "inkarkat/vim-visualrepeat",
-        event = "VeryLazy",
-        vscode = true,
-    },
 }

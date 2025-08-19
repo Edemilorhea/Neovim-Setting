@@ -8,9 +8,6 @@ function M.setup()
 
     -- 只在 Neovim 中使用的功能按鍵
     
-    -- 檔案導航 (只在 Neovim 有用)
-    vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle<cr>", { desc = "Toggle file explorer" })
-    vim.keymap.set("n", "<leader>o", "<cmd>Neotree focus<cr>", { desc = "Focus file explorer" })
     
     -- Buffer 管理
     vim.keymap.set("n", "<Tab>", "<cmd>bnext<cr>", { desc = "Next buffer" })

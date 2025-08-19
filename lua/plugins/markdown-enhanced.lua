@@ -28,7 +28,7 @@ return {
             enabled = true,
             debounce = 150,
             max_file_size = 5.0,
-            
+
             heading = {
                 enabled = true,
                 sign = true,
@@ -37,15 +37,23 @@ return {
                 signs = { "󰫎 " },
                 width = "full",
                 backgrounds = {
-                    "RenderMarkdownH1Bg", "RenderMarkdownH2Bg", "RenderMarkdownH3Bg",
-                    "RenderMarkdownH4Bg", "RenderMarkdownH5Bg", "RenderMarkdownH6Bg",
+                    "RenderMarkdownH1Bg",
+                    "RenderMarkdownH2Bg",
+                    "RenderMarkdownH3Bg",
+                    "RenderMarkdownH4Bg",
+                    "RenderMarkdownH5Bg",
+                    "RenderMarkdownH6Bg",
                 },
                 foregrounds = {
-                    "RenderMarkdownH1", "RenderMarkdownH2", "RenderMarkdownH3",
-                    "RenderMarkdownH4", "RenderMarkdownH5", "RenderMarkdownH6",
+                    "RenderMarkdownH1",
+                    "RenderMarkdownH2",
+                    "RenderMarkdownH3",
+                    "RenderMarkdownH4",
+                    "RenderMarkdownH5",
+                    "RenderMarkdownH6",
                 },
             },
-            
+
             code = {
                 enabled = true,
                 sign = true,
@@ -61,7 +69,7 @@ return {
                 highlight = "RenderMarkdownCode",
                 highlight_inline = "RenderMarkdownCodeInlineBg",
             },
-            
+
             bullet = {
                 enabled = true,
                 icons = { "◉", "○", "✸", "✿" },
@@ -69,7 +77,7 @@ return {
                 right_pad = 1,
                 highlight = "RenderMarkdownBullet",
             },
-            
+
             checkbox = {
                 enabled = true,
                 unchecked = { icon = "⬜", highlight = "RenderMarkdownUnchecked" },
@@ -84,14 +92,14 @@ return {
                 },
                 right_pad = 1,
             },
-            
+
             quote = {
                 enabled = true,
                 icon = "┃",
                 repeat_linebreak = false,
                 highlight = "RenderMarkdownQuote",
             },
-            
+
             pipe_table = {
                 enabled = true,
                 preset = "round",
@@ -103,7 +111,7 @@ return {
                 row = "RenderMarkdownTableRow",
                 filler = "RenderMarkdownTableFill",
             },
-            
+
             link = {
                 enabled = true,
                 image = "🖼️ ",
@@ -120,7 +128,7 @@ return {
                     markdown = { pattern = "%.md$", icon = "📋 ", highlight = "RenderMarkdownLink" },
                 },
             },
-            
+
             callout = {
                 note = { raw = "[!NOTE]", rendered = "󰋽 Note", highlight = "RenderMarkdownInfo" },
                 tip = { raw = "[!TIP]", rendered = "󰌶 Tip", highlight = "RenderMarkdownSuccess" },
@@ -128,7 +136,7 @@ return {
                 warning = { raw = "[!WARNING]", rendered = "󰀪 Warning", highlight = "RenderMarkdownWarn" },
                 caution = { raw = "[!CAUTION]", rendered = "󰳦 Caution", highlight = "RenderMarkdownError" },
             },
-            
+
             win_options = {
                 conceallevel = { default = vim.o.conceallevel, rendered = 3 },
                 concealcursor = { default = vim.o.concealcursor, rendered = "" },
@@ -141,7 +149,9 @@ return {
         "epwalsh/obsidian.nvim",
         version = "*",
         enabled = vault_exists,
-        cond = function() return vault_exists and not vim.g.vscode end,
+        cond = function()
+            return vault_exists and not vim.g.vscode
+        end,
         dependencies = {
             "nvim-lua/plenary.nvim",
             "hrsh7th/nvim-cmp",
@@ -149,8 +159,10 @@ return {
             "nvim-treesitter/nvim-treesitter",
         },
         opts = function()
-            if not vault_exists then return {} end
-            
+            if not vault_exists then
+                return {}
+            end
+
             return {
                 workspaces = {
                     { name = "main", path = vault_path },
@@ -181,20 +193,28 @@ return {
                 ui = { enable = false },
                 mappings = {
                     ["gf"] = {
-                        action = function() return require("obsidian").util.gf_passthrough() end,
+                        action = function()
+                            return require("obsidian").util.gf_passthrough()
+                        end,
                         opts = { buffer = true, expr = true, noremap = true },
                     },
                     ["<leader>ch"] = {
-                        action = function() require("obsidian").util.toggle_checkbox() end,
+                        action = function()
+                            require("obsidian").util.toggle_checkbox()
+                        end,
                         opts = { buffer = true, noremap = true },
                     },
                     ["<CR>"] = {
-                        action = function() return require("obsidian").util.smart_action() end,
+                        action = function()
+                            return require("obsidian").util.smart_action()
+                        end,
                         opts = { buffer = true, expr = true, noremap = true },
                     },
                 },
                 callbacks = {
-                    post_setup = function() print("Obsidian.nvim 已載入") end,
+                    post_setup = function()
+                        print("Obsidian.nvim 已載入")
+                    end,
                     post_set_workspace = function(client, workspace)
                         print("切換到工作區: " .. workspace.name)
                     end,
@@ -208,7 +228,9 @@ return {
         "iamcco/markdown-preview.nvim",
         ft = "markdown",
         cond = not vim.g.vscode,
-        build = function() vim.fn["mkdp#util#install"]() end,
+        build = function()
+            vim.fn["mkdp#util#install"]()
+        end,
         config = function()
             vim.g.mkdp_auto_start = 0
             vim.g.mkdp_browser = "msedge"
@@ -220,50 +242,33 @@ return {
         },
     },
 
-    -- Glow 終端預覽
-    {
-        "ellisonleao/glow.nvim",
-        cmd = "Glow",
-        cond = not vim.g.vscode,
-        config = function()
-            require("glow").setup({
-                border = "shadow",
-                style = "dark",
-                pager = false,
-                width_ratio = 0.7,
-                height_ratio = 0.7,
-            })
-        end,
-        keys = {
-            { "<leader>mg", "<cmd>Glow<cr>", desc = "Glow Preview" },
-        },
-    },
-
-    -- Peek 瀏覽器預覽 (需要 deno)
-    {
-        "toppair/peek.nvim",
-        enabled = deno_exists,
-        cond = function() return deno_exists and not vim.g.vscode end,
-        build = deno_exists and "deno task --quiet build:fast" or nil,
-        ft = "markdown",
-        config = function()
-            require("peek").setup({
-                auto_load = true,
-                close_on_bdelete = true,
-                syntax = true,
-                theme = "dark",
-                update_on_change = true,
-                app = "webview",
-                filetype = { "markdown" },
-                throttle_at = 200000,
-                throttle_time = "auto",
-            })
-        end,
-        keys = {
-            { "<leader>mp", "<cmd>PeekOpen<cr>", desc = "Peek Open" },
-            { "<leader>mc", "<cmd>PeekClose<cr>", desc = "Peek Close" },
-        },
-    },
+    -- -- Peek 瀏覽器預覽 (需要 deno)
+    -- {
+    --     "toppair/peek.nvim",
+    --     enabled = deno_exists,
+    --     cond = function()
+    --         return deno_exists and not vim.g.vscode
+    --     end,
+    --     build = deno_exists and "deno task --quiet build:fast" or nil,
+    --     ft = "markdown",
+    --     config = function()
+    --         require("peek").setup({
+    --             auto_load = true,
+    --             close_on_bdelete = true,
+    --             syntax = true,
+    --             theme = "dark",
+    --             update_on_change = true,
+    --             app = "webview",
+    --             filetype = { "markdown" },
+    --             throttle_at = 200000,
+    --             throttle_time = "auto",
+    --         })
+    --     end,
+    --     keys = {
+    --         { "<leader>mp", "<cmd>PeekOpen<cr>", desc = "Peek Open" },
+    --         { "<leader>mc", "<cmd>PeekClose<cr>", desc = "Peek Close" },
+    --     },
+    -- },
 
     -- 圖片貼上工具
     {
@@ -296,48 +301,41 @@ return {
                 },
             },
         },
-        keys = {
-            {
-                "<leader>ip",
-                function() require("img-clip").paste_image() end,
-                desc = "📎 貼上圖片並插入 Markdown 語法",
-            },
-        },
     },
 
     -- TOC 生成器
-    {
-        "mzlogin/vim-markdown-toc",
-        ft = "markdown",
-        cond = not vim.g.vscode,
-        config = function()
-            vim.g.vmt_auto_update_on_save = 0
-            vim.g.vmt_fence_text = "TOC"
-            vim.g.vmt_fence_closing_text = "/TOC"
-        end,
-        keys = {
-            { "<leader>mt", ":GenTocGFM<CR>", desc = "Generate Markdown TOC" },
-            {
-                "<leader>mw",
-                function()
-                    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-                    local toc = { "<!-- TOC -->" }
-                    
-                    for _, line in ipairs(lines) do
-                        local level, title = line:match("^(#+)%s+(.+)")
-                        if level and title then
-                            local indent = string.rep("    ", #level - 1)
-                            table.insert(toc, string.format("%s* [[#%s]]", indent, title))
-                        end
-                    end
-                    
-                    table.insert(toc, "<!-- /TOC -->")
-                    table.insert(toc, "")
-                    vim.api.nvim_buf_set_lines(0, 0, 0, false, toc)
-                    print("Wiki TOC 已生成")
-                end,
-                desc = "Generate Wiki TOC",
-            },
-        },
-    },
+    -- {
+    --     "mzlogin/vim-markdown-toc",
+    --     ft = "markdown",
+    --     cond = not vim.g.vscode,
+    --     config = function()
+    --         vim.g.vmt_auto_update_on_save = 0
+    --         vim.g.vmt_fence_text = "TOC"
+    --         vim.g.vmt_fence_closing_text = "/TOC"
+    --     end,
+    --     keys = {
+    --         { "<leader>mt", ":GenTocGFM<CR>", desc = "Generate Markdown TOC" },
+    --         {
+    --             "<leader>mw",
+    --             function()
+    --                 local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    --                 local toc = { "<!-- TOC -->" }
+    --
+    --                 for _, line in ipairs(lines) do
+    --                     local level, title = line:match("^(#+)%s+(.+)")
+    --                     if level and title then
+    --                         local indent = string.rep("    ", #level - 1)
+    --                         table.insert(toc, string.format("%s* [[#%s]]", indent, title))
+    --                     end
+    --                 end
+    --
+    --                 table.insert(toc, "<!-- /TOC -->")
+    --                 table.insert(toc, "")
+    --                 vim.api.nvim_buf_set_lines(0, 0, 0, false, toc)
+    --                 print("Wiki TOC 已生成")
+    --             end,
+    --             desc = "Generate Wiki TOC",
+    --         },
+    --     },
+    -- },
 }

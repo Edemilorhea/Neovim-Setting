@@ -223,7 +223,7 @@ return {
         end,
     },
 
-    -- Markdown 預覽插件
+    -- Markdown 預覽插件 (使用系統瀏覽器，適合有防火牆限制的環境)
     {
         "iamcco/markdown-preview.nvim",
         ft = "markdown",
@@ -232,43 +232,144 @@ return {
             vim.fn["mkdp#util#install"]()
         end,
         config = function()
+            -- 基本設定
             vim.g.mkdp_auto_start = 0
-            vim.g.mkdp_browser = "msedge"
+            vim.g.mkdp_auto_close = 1
+            vim.g.mkdp_browser = ""
             vim.g.mkdp_echo_preview_url = 1
+            vim.g.mkdp_theme = "dark"
+            vim.g.mkdp_port = "8080"
+            vim.g.mkdp_page_title = "「${name}」"
+            vim.g.mkdp_open_to_the_world = 0
+
+            -- CSS 檔案路徑 (確保檔案存在)
+            local css_dir = vim.fn.expand("~/dotfiles/nvim/lua/customfile")
+            local markdown_css = css_dir .. "github-markdown-dark.min.css"
+            local highlight_css = css_dir .. "tomorrow-night-eighties.css"
+
+            -- 檢查檔案是否存在，如果存在則使用自訂 CSS
+            if vim.fn.filereadable(markdown_css) == 1 then
+                vim.g.mkdp_markdown_css = markdown_css
+            else
+                vim.g.mkdp_markdown_css = "" -- 使用預設
+                vim.notify("自訂 Markdown CSS 檔案不存在: " .. markdown_css, vim.log.levels.WARN)
+            end
+
+            if vim.fn.filereadable(highlight_css) == 1 then
+                vim.g.mkdp_highlight_css = highlight_css
+            else
+                vim.g.mkdp_highlight_css = "" -- 使用預設
+                vim.notify("自訂 Highlight CSS 檔案不存在: " .. highlight_css, vim.log.levels.WARN)
+            end
+
+            -- 預覽選項
+            vim.g.mkdp_preview_options = {
+                mkit = {},
+                katex = {},
+                uml = {},
+                maid = {},
+                disable_sync_scroll = 0,
+                sync_scroll_type = "middle",
+                hide_yaml_meta = 1,
+                sequence_diagrams = {},
+                flowchart_diagrams = {},
+                content_editable = false,
+                disable_filename = 0,
+                toc = {},
+            }
+
+            -- 創建主題切換指令
+            vim.api.nvim_create_user_command("MarkdownThemeDark", function()
+                vim.g.mkdp_theme = "dark"
+                vim.notify("Markdown Preview 主題已切換為：Dark", vim.log.levels.INFO)
+            end, { desc = "切換到深色主題" })
+
+            vim.api.nvim_create_user_command("MarkdownThemeLight", function()
+                vim.g.mkdp_theme = "light"
+                vim.notify("Markdown Preview 主題已切換為：Light", vim.log.levels.INFO)
+            end, { desc = "切換到淺色主題" })
+
+            -- 切換自訂 CSS 主題的指令
+            vim.api.nvim_create_user_command("MarkdownThemeCustom", function()
+                if vim.fn.filereadable(markdown_css) == 1 then
+                    vim.g.mkdp_markdown_css = markdown_css
+                    vim.g.mkdp_highlight_css = highlight_css
+                    vim.notify("已啟用自訂 CSS 主題", vim.log.levels.INFO)
+                else
+                    vim.notify("自訂 CSS 檔案不存在，請先下載到: " .. css_dir, vim.log.levels.ERROR)
+                end
+            end, { desc = "啟用自訂 CSS 主題" })
+
+            vim.api.nvim_create_user_command("MarkdownThemeDefault", function()
+                vim.g.mkdp_markdown_css = ""
+                vim.g.mkdp_highlight_css = ""
+                vim.notify("已重置為預設主題", vim.log.levels.INFO)
+            end, { desc = "重置為預設主題" })
+
+            -- 建立 CSS 目錄的指令
+            vim.api.nvim_create_user_command("MarkdownSetupCSS", function()
+                vim.fn.system("mkdir -p " .. css_dir)
+                vim.notify("CSS 目錄已建立: " .. css_dir, vim.log.levels.INFO)
+                vim.notify("請手動下載 CSS 檔案到此目錄", vim.log.levels.INFO)
+            end, { desc = "建立 CSS 目錄" })
         end,
         keys = {
-            { "<leader>mp", "<cmd>MarkdownPreview<cr>", desc = "Markdown Preview" },
+            { "<leader>mpp", "<cmd>MarkdownPreview<cr>", desc = "Markdown Preview" },
             { "<leader>ms", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop Preview" },
+            { "<leader>mt", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle Preview" },
+            -- 主題切換快捷鍵
+            { "<leader>mtd", "<cmd>MarkdownThemeDark<cr>", desc = "Dark Theme" },
+            { "<leader>mtl", "<cmd>MarkdownThemeLight<cr>", desc = "Light Theme" },
+            { "<leader>mtc", "<cmd>MarkdownThemeCustom<cr>", desc = "Custom CSS Theme" },
+            { "<leader>mtr", "<cmd>MarkdownThemeDefault<cr>", desc = "Reset Theme" },
         },
     },
 
-    -- -- Peek 瀏覽器預覽 (需要 deno)
-    -- {
-    --     "toppair/peek.nvim",
-    --     enabled = deno_exists,
-    --     cond = function()
-    --         return deno_exists and not vim.g.vscode
-    --     end,
-    --     build = deno_exists and "deno task --quiet build:fast" or nil,
-    --     ft = "markdown",
-    --     config = function()
-    --         require("peek").setup({
-    --             auto_load = true,
-    --             close_on_bdelete = true,
-    --             syntax = true,
-    --             theme = "dark",
-    --             update_on_change = true,
-    --             app = "webview",
-    --             filetype = { "markdown" },
-    --             throttle_at = 200000,
-    --             throttle_time = "auto",
-    --         })
-    --     end,
-    --     keys = {
-    --         { "<leader>mp", "<cmd>PeekOpen<cr>", desc = "Peek Open" },
-    --         { "<leader>mc", "<cmd>PeekClose<cr>", desc = "Peek Close" },
-    --     },
-    -- },
+    -- Peek 瀏覽器預覽 (需要 deno)
+    {
+        "toppair/peek.nvim",
+        enabled = deno_exists,
+        cond = function()
+            return deno_exists and not vim.g.vscode
+        end,
+        build = deno_exists and "deno task --quiet build:fast" or nil,
+        cmd = { "PeekOpen", "PeekClose" },
+        ft = "markdown",
+        config = function()
+            require("peek").setup({
+                auto_load = false, -- 改為手動啟動，避免自動檢查衝突
+                close_on_bdelete = true,
+                syntax = true,
+                theme = "dark",
+                update_on_change = true,
+                app = "webview",
+                filetype = { "markdown", "md" }, -- 加上 md 副檔名支援
+                throttle_at = 200000,
+                throttle_time = "auto",
+            })
+
+            -- 手動註冊指令
+            vim.api.nvim_create_user_command("PeekOpen", function()
+                local filetype = vim.bo.filetype
+                if filetype == "markdown" then
+                    require("peek").open()
+                else
+                    vim.notify(
+                        "PeekOpen: 只支援 markdown 檔案，當前檔案類型: " .. filetype,
+                        vim.log.levels.WARN
+                    )
+                end
+            end, {})
+
+            vim.api.nvim_create_user_command("PeekClose", function()
+                require("peek").close()
+            end, {})
+        end,
+        keys = {
+            { "<leader>mpo", "<cmd>PeekOpen<cr>", desc = "Peek Open" },
+            { "<leader>mpc", "<cmd>PeekClose<cr>", desc = "Peek Close" },
+        },
+    },
 
     -- 圖片貼上工具
     {

@@ -20,14 +20,17 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- 在 VSCode 環境下停用 nvim-treesitter-textobjects
     { "nvim-treesitter/nvim-treesitter-textobjects", enabled = not vim.g.vscode },
-    -- 結構化插件分類 (按載入順序)
-    { import = "plugins.shared" }, -- VSCode + Neovim 共用插件
-    { import = "plugins.development" }, -- 開發工具 (兩邊都需要)
-    { import = "plugins.neovim-only", cond = not vim.g.vscode }, -- 純 Neovim 插件
-    { import = "plugins.ui-restructured", cond = not vim.g.vscode }, -- UI 插件
-    { import = "plugins.markdown-enhanced", cond = not vim.g.vscode }, -- Markdown 生態系統
-    -- 其他插件 (向後相容性)
-    { import = "plugins" },
+    -- VSCode 環境僅載入必要插件
+    vim.g.vscode and { import = "plugins.shared" } or {
+      -- 結構化插件分類 (按載入順序)
+      { import = "plugins.shared" }, -- VSCode + Neovim 共用插件
+      { import = "plugins.development" }, -- 開發工具 (兩邊都需要)
+      { import = "plugins.neovim-only", cond = not vim.g.vscode }, -- 純 Neovim 插件
+      { import = "plugins.ui-restructured", cond = not vim.g.vscode }, -- UI 插件
+      { import = "plugins.markdown-enhanced", cond = not vim.g.vscode }, -- Markdown 生態系統
+      -- 其他插件 (向後相容性)
+      { import = "plugins" },
+    },
   },
   defaults = {
     -- 啟用 lazy loading 以提升啟動速度
@@ -42,9 +45,9 @@ require("lazy").setup({
     missing = true,
   },
   checker = {
-    enabled = true, -- check for plugin updates periodically
-    notify = false, -- notify on update
-  }, -- automatically check for plugin updates
+    enabled = not vim.g.vscode, -- 在 VSCode 中停用更新檢查
+    notify = false,
+  },
   performance = {
     cache = {
       enabled = true,

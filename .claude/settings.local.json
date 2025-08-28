@@ -2,8 +2,15 @@
   "permissions": {
     "allow": [
       "Bash(ls:*)",
-      "Bash(npm:*)"
+      "Bash(npm:*)",
+      "Bash(where:*)",
+      "Bash(pwsh.exe:*)",
+      "Bash(nvim:*)",
+      "Bash(rm:*)"
     ],
-    "deny": []
+    "deny": [],
+    "additionalDirectories": [
+      "C:\\Users\\tc_tseng\\AppData\\Local\\nvim-data\\lazy\\markdown-preview.nvim\\app"
+    ]
   }
 }

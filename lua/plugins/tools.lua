@@ -19,38 +19,10 @@ local vault_exists, vault_path = check_obsidian_vault()
 local deno_exists = check_deno()
 
 return {
-    -- Peek Markdown 預覽 (LazyVim 沒有)
+    -- vim-visualrepeat 插件
     {
         "inkarkat/vim-visualrepeat",
-        event = "VeryLazy", -- 或你喜歡的啟動條件
-    },
-    {
-        "toppair/peek.nvim",
-        lazy = true,
-        -- 只有在有 deno 的情況下才啟用
-        enabled = deno_exists,
-        cond = function()
-            return deno_exists
-        end,
-        build = deno_exists and "deno task --quiet build:fast" or nil,
-        ft = "markdown",
-        config = function()
-            if vim.g.vscode or not deno_exists then
-                return
-            end
-            require("peek").setup({
-                -- 您的設定...
-                auto_load = true,
-                close_on_bdelete = true,
-                syntax = true,
-                theme = "dark",
-                update_on_change = true,
-                app = "webview",
-                filetype = { "markdown" },
-                throttle_at = 200000,
-                throttle_time = "auto",
-            })
-        end,
+        event = "VeryLazy",
     },
     -- Obsidian 整合 (LazyVim 沒有)
     {
@@ -249,21 +221,21 @@ return {
                         action = function()
                             return require("obsidian").util.gf_passthrough()
                         end,
-                        opts = { buffer = true, expr = true, noremap = true },
+                        opts = { buffer = true, expr = true, noremap = true, desc = "跟隨連結" },
                     },
                     -- 切換複選框
                     ["<leader>ch"] = {
                         action = function()
                             require("obsidian").util.toggle_checkbox()
                         end,
-                        opts = { buffer = true, noremap = true },
+                        opts = { buffer = true, noremap = true, desc = "切換複選框" },
                     },
                     -- 智慧動作 (跟隨連結或切換複選框)
                     ["<CR>"] = {
                         action = function()
                             return require("obsidian").util.smart_action()
                         end,
-                        opts = { buffer = true, expr = true, noremap = true },
+                        opts = { buffer = true, expr = true, noremap = true, desc = "智慧動作" },
                     },
                     -- **新增 TOC 功能**
                     -- 生成 Wiki 格式 TOC (支援中文標題)
@@ -299,7 +271,7 @@ return {
                                 print("TOC 已生成")
                             end
                         end,
-                        opts = { buffer = true, noremap = true },
+                        opts = { buffer = true, noremap = true, desc = "生成 Wiki 格式 TOC" },
                     },
                     -- 生成標準 Markdown TOC
                     ["<leader>mT"] = {
@@ -335,7 +307,7 @@ return {
                                 print("Markdown TOC 已生成")
                             end
                         end,
-                        opts = { buffer = true, noremap = true },
+                        opts = { buffer = true, noremap = true, desc = "生成標準 Markdown TOC" },
                     },
                     -- 移除 TOC
                     ["<leader>mr"] = {
@@ -357,7 +329,7 @@ return {
                                 print("未找到 TOC")
                             end
                         end,
-                        opts = { buffer = true, noremap = true },
+                        opts = { buffer = true, noremap = true, desc = "移除 TOC" },
                     },
                     -- 快速跳轉到 TOC
                     ["<leader>mg"] = {
@@ -372,7 +344,7 @@ return {
                             end
                             print("未找到 TOC")
                         end,
-                        opts = { buffer = true, noremap = true },
+                        opts = { buffer = true, noremap = true, desc = "跳轉到 TOC" },
                     },
                 },
                 -- Obsidian 應用設定

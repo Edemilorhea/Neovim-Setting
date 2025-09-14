@@ -1,11 +1,11 @@
+-- 必須在所有載入之前設定 mapleader
+-- vim.g.mapleader = "\\"
+-- vim.g.maplocalleader = "\\"
+
 -- VSCode 環境最小化載入
 if vim.g.vscode then
-    -- 基礎設定
-    vim.g.mapleader = " "
-    vim.g.maplocalleader = "\\"
-
-    -- 通知系統優化
-    vim.notify = print
+    -- 通知系統優化（完全停用通知）
+    vim.notify = function() end
 
     -- LSP 清理補丁
     vim.lsp.buf.clear_references = function() end
@@ -53,12 +53,11 @@ if vim.g.vscode then
         },
     })
 
-    -- 載入 VSCode 快捷鍵
-    require("config.options")
+    -- 載入 VSCode 基礎設定和快捷鍵
+    require("config.options") -- 載入基礎選項設定
     require("keymap.general").setup()
     require("keymap.vscode").setup()
 
-    vim.notify("🚀 VSCode Neovim 已載入")
     return -- 提前結束，不執行下面的完整載入
 end
 
@@ -75,7 +74,7 @@ if pcall(require, "plugin.lsp") then
     end
 end
 
--- 載入重構後的按鍵設定
-require("config.keymaps-restructured")
+-- 載入按鍵設定
+require("config.keymaps")
 
 vim.notify("🚀 Neovim 完整環境已啟動")

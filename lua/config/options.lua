@@ -4,6 +4,9 @@ local g = vim.g
 local bo = vim.bo
 local wo = vim.wo
 
+vim.g.mapleader = "\\"
+vim.g.maplocalleader = "\\"
+
 vim.g.markdown_fenced_languages = {
     "csharp=cs",
     "cs",
@@ -11,9 +14,6 @@ vim.g.markdown_fenced_languages = {
     "javascript",
     "bash=sh",
 }
-
-g.mapleader = "\\"
-g.maplocalleader = "\\"
 
 opt.number = true
 wo.relativenumber = true

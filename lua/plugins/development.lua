@@ -9,7 +9,6 @@ return {
         vscode = true,
     },
 
-
     -- Mason LSP 管理器 (只在 Neovim 中使用)
     {
         "williamboman/mason.nvim",
@@ -26,7 +25,7 @@ return {
         opts = {
             ensure_installed = {
                 "lua_ls",
-                "jsonls", 
+                "jsonls",
                 "ts_ls",
                 "html",
                 "cssls",
@@ -58,10 +57,11 @@ return {
     -- 自動完成增強 (按需載入)
     {
         "hrsh7th/nvim-cmp",
+        cond = not vim.g.vsocde,
         event = "InsertEnter", -- 進入插入模式時載入
         dependencies = {
             "hrsh7th/cmp-emoji",
         },
     },
-
 }
+

@@ -45,8 +45,8 @@ function M.setup()
     -- 縮排控制
     vim.keymap.set("i", "<S-Tab>", "<C-d>", { desc = "Unindent" })
 
-    -- Visual 模式下貼上不覆蓋暫存器
-    vim.keymap.set("v", "p", '"_dP', { desc = "Paste without yanking" })
+    -- Visual 模式下貼上不覆蓋暫存器，保護黑洞寄存器
+    vim.keymap.set("x", "p", '"zdP', { desc = "Paste without yanking (protect black hole)" })
 
     -- 基本文字選取和移動（兩邊通用）
     vim.keymap.set("n", "H", "^", { desc = "Go to first non-blank character" })

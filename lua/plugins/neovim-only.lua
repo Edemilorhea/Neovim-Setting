@@ -83,7 +83,7 @@ return {
                         vim.cmd('normal! "_dd')
                         vim.cmd("AutolistRecalculate")
                     end, "Delete line and recalc")
-                    map("v", "p", "p<cmd>AutolistRecalculate<cr>", "Paste and recalc")
+                    map("v", "p", '"zdP<cmd>AutolistRecalculate<cr>', "Paste without yanking and recalc")
                 end,
             })
         end,

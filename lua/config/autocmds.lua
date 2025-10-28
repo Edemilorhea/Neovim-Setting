@@ -67,3 +67,12 @@ if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
         end,
     })
 end
+
+-- 啟動時檢查依賴工具（延遲執行，避免影響啟動速度）
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        vim.defer_fn(function()
+            require("config.check-deps").check()
+        end, 1000) -- 延遲 1 秒執行
+    end,
+})

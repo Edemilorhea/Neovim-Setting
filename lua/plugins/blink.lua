@@ -4,7 +4,7 @@ return {
     dependencies = {
         "rafamadriz/friendly-snippets",
     },
-    version = "v0.*",
+    version = "*",
     opts = {
         -- 按鍵對應
         keymap = {

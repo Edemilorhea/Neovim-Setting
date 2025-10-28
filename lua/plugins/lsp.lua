@@ -1,27 +1,39 @@
 return {
-  {
+{
     "neovim/nvim-lspconfig",
-    vscode = false,
-    lazy = true,
-    cond = function()
-      return not vim.g.vscode
-    end,
-    opts = function()
-      local Keys = require("lazyvim.plugins.lsp.keymaps").get()
-    -- stylua: ignore
-    vim.list_extend(Keys, {
+    keys = {
+      -- 禁用預設按鍵
       { "gd", false },
       { "gr", false },
       { "gI", false },
       { "gy", false },
-      { "<leader>ss", function() Snacks.picker.lsp_symbols({ filter = LazyVim.config.kind_filter }) end, desc = "LSP Symbols", has = "documentSymbol" },
-      { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols({ filter = LazyVim.config.kind_filter }) end, desc = "LSP Workspace Symbols", has = "workspace/symbols" },
-    })
-    end,
+      
+      -- 自定義按鍵
+      { "<leader>ss", "<cmd>Telescope lsp_document_symbols<cr>", desc = "LSP Symbols" },
+      { "<leader>sS", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "LSP Workspace Symbols" },
+    },
+    opts = {
+      servers = {
+        -- Disable stylua as LSP (it's a formatter, not an LSP server)
+        -- stylua = false,
+        -- Fix vue_ls naming issue (LazyVim uses wrong name)
+        -- vue_ls = false,
+        lua_ls = {},
+        jsonls = {},
+        ts_ls = {},
+        html = {},
+        cssls = {},
+        -- volar = {},
+        emmet_ls = {},
+        eslint = {},
+        omnisharp = {},
+        pyright = {},
+        marksman = {},
+      },
+    },
   },
   {
-    "williamboman/mason.nvim",
-    version = "^1.0.0",
+    "mason-org/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonLog" },
     build = ":MasonUpdate",
     vscode = false,
@@ -32,8 +44,7 @@ return {
     opts = {},
   },
   {
-    "williamboman/mason-lspconfig.nvim",
-    version = "^1.0.0",
+    "mason-org/mason-lspconfig.nvim",
     lazy = true,
     event = "VeryLazy",
     vscode = false,
@@ -47,7 +58,7 @@ return {
         "ts_ls",
         "html",
         "cssls",
-        "volar",
+        -- "volar",
         "emmet_ls",
         "eslint",
         "omnisharp",

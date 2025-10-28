@@ -11,7 +11,7 @@ return {
 
     -- Mason LSP 管理器 (只在 Neovim 中使用)
     {
-        "williamboman/mason.nvim",
+        " mason-org/mason.nvim",
         cmd = { "Mason", "MasonInstall", "MasonLog" },
         build = ":MasonUpdate",
         cond = not vim.g.vscode,
@@ -19,7 +19,7 @@ return {
     },
 
     {
-        "williamboman/mason-lspconfig.nvim",
+        " mason-org/mason-lspconfig.nvim",
         event = "VeryLazy",
         cond = not vim.g.vscode,
         opts = {
@@ -29,7 +29,6 @@ return {
                 "ts_ls",
                 "html",
                 "cssls",
-                "volar",
                 "emmet_ls",
                 "eslint",
                 "omnisharp",
@@ -44,7 +43,7 @@ return {
         "neovim/nvim-lspconfig",
         cond = not vim.g.vscode,
         opts = function()
-            local Keys = require("lazyvim.plugins.lsp.keymaps").get()
+            local Keys = {}
             vim.list_extend(Keys, {
                 { "gd", false },
                 { "gr", false },

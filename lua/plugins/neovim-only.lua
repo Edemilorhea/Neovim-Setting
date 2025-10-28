@@ -99,10 +99,10 @@ return {
             require("nvim-treesitter.install").prefer_git = true
             require("nvim-treesitter.install").compilers = { "clang", "gcc", "cl", "zig" }
 
-            require("nvim-treesitter.configs").setup({
+            require("nvim-treesitter").setup({
                 ensure_installed = {
                     "lua", "vim", "vimdoc", "query",
-                    "html", "javascript", "vue", "css",
+                    "html", "javascript", "css",
                     "python", "c_sharp", "typescript",
                     "sql", "mermaid", "markdown", "bash",
                 },

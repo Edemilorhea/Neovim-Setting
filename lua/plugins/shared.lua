@@ -94,7 +94,7 @@ return {
 
     -- mini.comment - 輕量級註解插件（替代 Comment.nvim）
     {
-        "echasnovski/mini.comment",
+        "nvim-mini/mini.comment",
         event = "VeryLazy",
         vscode = true,
         opts = {

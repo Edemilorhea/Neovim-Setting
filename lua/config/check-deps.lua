@@ -11,7 +11,6 @@ local required_tools = {
 
   -- 格式化工具
   { cmd = "prettier", name = "Prettier", install = "npm install -g prettier", desc = "程式碼格式化工具" },
-  { cmd = "stylua", name = "StyLua", install = "scoop install stylua", desc = "Lua 格式化工具" },
 
   -- 選用但建議安裝
   { cmd = "fzf", name = "fzf", install = "scoop install fzf", desc = "模糊搜尋工具 (選用)", optional = true },

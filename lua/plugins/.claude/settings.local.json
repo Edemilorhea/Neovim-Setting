@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Read(//c/Users/leon8/dotfiles/nvim/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

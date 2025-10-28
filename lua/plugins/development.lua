@@ -9,35 +9,6 @@ return {
         vscode = true,
     },
 
-    -- Mason LSP 管理器 (只在 Neovim 中使用)
-    {
-        " mason-org/mason.nvim",
-        cmd = { "Mason", "MasonInstall", "MasonLog" },
-        build = ":MasonUpdate",
-        cond = not vim.g.vscode,
-        opts = {},
-    },
-
-    {
-        " mason-org/mason-lspconfig.nvim",
-        event = "VeryLazy",
-        cond = not vim.g.vscode,
-        opts = {
-            ensure_installed = {
-                "lua_ls",
-                "jsonls",
-                "ts_ls",
-                "html",
-                "cssls",
-                "emmet_ls",
-                "eslint",
-                "omnisharp",
-                "pyright",
-                "marksman",
-            },
-        },
-    },
-
     -- LSP 配置 (只在 Neovim 中使用)
     {
         "neovim/nvim-lspconfig",

@@ -53,10 +53,36 @@ local function setup_installed_servers()
     local mason_lspconfig = require("mason-lspconfig")
     local custom_servers = get_custom_server_config()
 
+    -- 排除非 LSP server 的工具（formatters, linters 等）
+    local non_lsp_tools = {
+        "stylua", "prettier", "black", "eslint_d", "prettierd",
+        "shfmt", "rustfmt", "gofmt", "clang_format",
+    }
+
     for _, name in ipairs(mason_lspconfig.get_installed_servers()) do
-        local opts = custom_servers[name] or {}
-        opts.on_attach = on_attach
-        lspconfig[name].setup(opts)
+        -- 檢查是否在排除列表中
+        local should_skip = false
+        for _, tool in ipairs(non_lsp_tools) do
+            if name == tool then
+                should_skip = true
+                break
+            end
+        end
+
+        if not should_skip then
+            local opts = custom_servers[name] or {}
+            opts.on_attach = on_attach
+            -- 使用 pcall 防止錯誤
+            local ok, err = pcall(function()
+                lspconfig[name].setup(opts)
+            end)
+            if not ok then
+                vim.notify(
+                    string.format("[LSP] 無法設置 %s: %s", name, err),
+                    vim.log.levels.WARN
+                )
+            end
+        end
     end
 end
 

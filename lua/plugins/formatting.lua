@@ -4,6 +4,7 @@ return {
     ---@type conform.setupOpts
     local opts = {
       formatters_by_ft = {
+        lua = { "stylua" },
         python = { "black" },
         javascript = { "prettier" },
         typescript = { "prettier" },
@@ -27,9 +28,9 @@ return {
         fish = { "fish_indent" },
       },
       formatters = {
-        -- stylua = {
-        --   prepend_args = { "--indent-type", "Spaces", "--indent-width", "4" },
-        -- },
+        stylua = {
+          prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
+        },
         black = {
           prepend_args = { "--line-length", "88", "--target-version", "py38" },
         },

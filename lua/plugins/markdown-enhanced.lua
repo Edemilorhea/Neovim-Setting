@@ -226,10 +226,12 @@ return {
     -- Markdown 預覽插件 (使用系統瀏覽器，適合有防火牆限制的環境)
     {
         "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         ft = "markdown",
         cond = not vim.g.vscode,
-        build = function()
-            vim.fn["mkdp#util#install"]()
+        build = "cd app && npm install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
         end,
         config = function()
             -- 基本設定
@@ -371,38 +373,6 @@ return {
         },
     },
 
-    -- 圖片貼上工具
-    {
-        "HakonHarnes/img-clip.nvim",
-        ft = "markdown",
-        cond = not vim.g.vscode,
-        opts = {
-            default = {
-                dir_path = "assets",
-                extension = "png",
-                file_name = function()
-                    local input = vim.fn.input("Image file name (no extension, leave blank for timestamp): ")
-                    return input ~= "" and input or os.date("%Y%m%d-%H%M%S")
-                end,
-                use_absolute_path = false,
-                relative_to_current_file = true,
-                template = "![$CURSOR]($FILE_PATH)",
-                url_encode_path = true,
-                relative_template_path = true,
-                use_cursor_in_template = true,
-                insert_mode_after_paste = true,
-                prompt_for_file_name = false,
-                drag_and_drop = { enabled = true, insert_mode = false },
-            },
-            filetypes = {
-                markdown = {
-                    template = "![$CURSOR]($FILE_PATH)",
-                    url_encode_path = true,
-                    download_images = false,
-                },
-            },
-        },
-    },
 
     -- TOC 生成器
     -- {

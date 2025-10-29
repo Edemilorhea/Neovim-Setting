@@ -473,6 +473,18 @@ return {
                 },
             },
         },
+        config = function(_, opts)
+            require("img-clip").setup(opts)
+            -- 禁用自動 Ctrl+V 綁定，只使用手動按鍵
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "markdown",
+                callback = function()
+                    -- 移除 img-clip 的預設 Ctrl+V 綁定（如果有的話）
+                    pcall(vim.keymap.del, "n", "<C-v>", { buffer = true })
+                    pcall(vim.keymap.del, "i", "<C-v>", { buffer = true })
+                end,
+            })
+        end,
         keys = {
             {
                 "<leader>ip",

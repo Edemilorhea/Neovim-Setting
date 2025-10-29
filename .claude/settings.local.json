@@ -9,8 +9,6 @@
       "Bash(rm:*)"
     ],
     "deny": [],
-    "additionalDirectories": [
-      "C:\\Users\\tc_tseng\\AppData\\Local\\nvim-data\\lazy\\markdown-preview.nvim\\app"
-    ]
+    "additionalDirectories": []
   }
 }
